@@ -1,6 +1,6 @@
 ﻿namespace PCB_Layout_GA
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,6 +33,7 @@
             this.netlistBrowseButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.editModulePaths = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +74,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.editModulePaths);
             this.groupBox1.Controls.Add(this.netlistTextBox);
             this.groupBox1.Controls.Add(this.netlistBrowseButton);
             this.groupBox1.Controls.Add(this.button1);
@@ -84,13 +86,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Netlist";
             // 
-            // Form1
+            // editModulePaths
+            // 
+            this.editModulePaths.Location = new System.Drawing.Point(336, 62);
+            this.editModulePaths.Name = "editModulePaths";
+            this.editModulePaths.Size = new System.Drawing.Size(116, 23);
+            this.editModulePaths.TabIndex = 4;
+            this.editModulePaths.Text = "Edit Module Paths";
+            this.editModulePaths.UseVisualStyleBackColor = true;
+            this.editModulePaths.Click += new System.EventHandler(this.editModulePaths_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 369);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Gentic Algorithm";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -105,6 +117,7 @@
         private System.Windows.Forms.Button netlistBrowseButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button editModulePaths;
     }
 }
 

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace PCB_Layout_GA
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -31,6 +31,12 @@ namespace PCB_Layout_GA
                 currentLine++;
             }
             currentLine++;
+        }
+
+        private void editModulePaths_Click(object sender, EventArgs e)
+        {
+            ModulePathEditor editorForm = new ModulePathEditor();
+            editorForm.ShowDialog();
         }
     }
 }
