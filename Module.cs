@@ -103,12 +103,12 @@ namespace PCB_Layout_GA
                 if (line[1] == '0')
                 {
                     //Parse T0
-                    module.ComponentReference = strings[10];
+                    module.ComponentReference = strings[strings.Count - 1];
                 }
                 else if (line[1] == '1')
                 {
                     //Parse T0
-                    module.ComponentValue = strings[10];
+                    module.ComponentValue = strings[strings.Count - 1];
                 }
             }
             else if (line.StartsWith("DA"))

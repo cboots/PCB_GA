@@ -18,7 +18,8 @@ namespace PCB_Layout_GA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\led.mod");
+            //TODO Launch Import Netlist Dialog
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\libcms.mod");
             List<Module> modules = new List<Module>();
             int currentLine = 0;
             while (currentLine < lines.Length)
