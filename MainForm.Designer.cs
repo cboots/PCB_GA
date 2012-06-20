@@ -61,6 +61,7 @@
             this.netlistBrowseButton.TabIndex = 2;
             this.netlistBrowseButton.Text = "Browse";
             this.netlistBrowseButton.UseVisualStyleBackColor = true;
+            this.netlistBrowseButton.Click += new System.EventHandler(this.netlistBrowseButton_Click);
             // 
             // button1
             // 

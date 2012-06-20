@@ -38,5 +38,18 @@ namespace PCB_Layout_GA
             ModulePathEditor editorForm = new ModulePathEditor();
             editorForm.ShowDialog();
         }
+
+        private void netlistBrowseButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Filter = "kicad netlist files (*.net)|*.net|All files (*.*)|*.*";
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //Add to list
+                netlistTextBox.Text = dialog.FileName;
+            }
+        }
     }
 }
