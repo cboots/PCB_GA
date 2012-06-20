@@ -15,5 +15,22 @@ namespace PCB_Layout_GA
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\led.mod");
+            List<Module> modules = new List<Module>();
+            int currentLine = 0;
+            while (currentLine < lines.Length)
+            {
+                if (lines[currentLine].StartsWith("$MODULE"))
+                {
+                    Module mod = Module.parse(lines, ref currentLine);
+                    modules.Add(mod);
+                }
+                currentLine++;
+            }
+            currentLine++;
+        }
     }
 }
