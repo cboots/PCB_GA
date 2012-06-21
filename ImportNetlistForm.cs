@@ -16,6 +16,8 @@ namespace PCB_Layout_GA
 
         private ModuleLibrary modules = new ModuleLibrary();
 
+        public NetList NetListResult { get; set; }
+
         public ImportNetlistForm()
         {
             InitializeComponent();
@@ -25,24 +27,60 @@ namespace PCB_Layout_GA
         {
             //TODO
             string netlistpath = (string) e.Argument;
+            logProgress("Reading Netlist File: " + netlistpath + "\n");
             // load netlist and build connections and part references
             NetList netlist = NetList.parseNetlistFile(netlistpath);
 
+            logProgress(20, "Netlist Read Done\n");
+
             // load components file and get module requirements
-            
             string componentpath = Path.ChangeExtension(netlistpath, ".cmp");
+
+            logProgress("Loading Components File: " + componentpath + "\n");
             Dictionary<string, string> cmp_mod = NetList.parseComponentsFile(componentpath);
 
+            logProgress(50, "Loading Component File Done\n");
+
             // find and load required modules
-            logProgress(50, "Test Log");
 
-            // assemble final circuit listing
-            
+            logProgress("Scanning Module Library Indecies\n");
+            //use search paths to index modules.  Libraries will be lazily initialized
+            modules.RefreshModuleIndex();
+            logProgress(60, "Module Library Index Built\n");
 
+            logProgress("Linking Components to Modules\n");
+            foreach (string componentName in cmp_mod.Keys)
+            {
+                string moduleLibName;
+                //Find reference in cmp-mod map
+                cmp_mod.TryGetValue(componentName, out moduleLibName);
+
+                //Find same component in netlist
+                NetList.Component component;
+                bool found = netlist.mComponents.TryGetValue(componentName, out component);
+
+                if (found)
+                {
+                    //link up the appropriate module to the netlist
+                    component.Mod = modules.FindModule(moduleLibName);
+                }
+
+            }
+            logProgress(100, "Modules Linked.\n");
+            logProgress("Done\n");
+            //Return Netlist object
+            e.Result = netlist;
         }
 
-        private void logProgress(int percent, string log)
+        int mProgress = 0;
+        public void logProgress(string log)
         {
+            logProgress(mProgress, log);
+        }
+
+        public void logProgress(int percent, string log)
+        {
+            mProgress = percent;
             backgroundWorker1.ReportProgress(percent, log);
         }
 
@@ -59,7 +97,7 @@ namespace PCB_Layout_GA
         {
             //Save results, enable finish button
             button1.Enabled = true;
-            
+            NetListResult = (NetList) e.Result;
         }
 
         private void ImportNetlistForm_Load(object sender, EventArgs e)
@@ -70,8 +108,16 @@ namespace PCB_Layout_GA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //TODO set final state
+            if (NetListResult != null)
+            {
+                DialogResult = System.Windows.Forms.DialogResult.OK;
+            }
+            else
+            {
+                DialogResult = System.Windows.Forms.DialogResult.Abort;
+            }
             Close();
         }
+
     }
 }

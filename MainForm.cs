@@ -12,6 +12,9 @@ namespace PCB_Layout_GA
 {
     public partial class MainForm : Form
     {
+
+        internal NetList ImportedNetList { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -27,23 +30,17 @@ namespace PCB_Layout_GA
 
             ImportNetlistForm importForm = new ImportNetlistForm();
             importForm.NetlistPath = netlistTextBox.Text;
-            importForm.ShowDialog();
-
-            //TODO get result
+            DialogResult result = importForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                ImportedNetList = importForm.NetListResult;
+            }
+            else
+            {
+                MessageBox.Show("Netlist Import Failed");
+            }
             
-            //string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\libcms.mod");
-            //List<Module> modules = new List<Module>();
-            //int currentLine = 0;
-            //while (currentLine < lines.Length)
-            //{
-            //    if (lines[currentLine].StartsWith("$MODULE"))
-            //    {
-            //        Module mod = Module.parse(lines, ref currentLine);
-            //        modules.Add(mod);
-            //    }
-            //    currentLine++;
-            //}
-            //currentLine++;
+            
         }
 
         private void editModulePaths_Click(object sender, EventArgs e)
@@ -62,5 +59,6 @@ namespace PCB_Layout_GA
                 netlistTextBox.Text = this.netlistOpenFileDialog.FileName;
             }
         }
+
     }
 }

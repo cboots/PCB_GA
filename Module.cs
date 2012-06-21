@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PCB_Layout_GA
 {
-    class Module
+    public class Module
     {
         public List<Pad> mPads = new List<Pad>();
         public List<Drawing> mDrawings = new List<Drawing>();

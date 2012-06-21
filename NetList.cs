@@ -5,7 +5,8 @@ using System.Text;
 
 namespace PCB_Layout_GA
 {
-    class NetList
+
+    public class NetList
     {
         public Dictionary<string, Component> mComponents = new Dictionary<string, Component>();
         public Dictionary<int, Net> mNets = new Dictionary<int, Net>();
@@ -60,7 +61,7 @@ namespace PCB_Layout_GA
                     string Module = "";
                     while (!lines[currentLine].StartsWith("EndCmp"))
                     {
-                        
+
                         if (lines[currentLine].StartsWith("Reference"))
                         {
                             Reference = lines[currentLine].Substring(12, lines[currentLine].Length - 13);//Trim Semicolon
@@ -88,6 +89,8 @@ namespace PCB_Layout_GA
             public string ID { get; set; }
 
             public string Value { get; set; }
+
+            public Module Mod { get; set; }
 
             //Format e.g. "1 N-000001"
             public List<string> PinNets = new List<string>();
@@ -125,12 +128,11 @@ namespace PCB_Layout_GA
 
             public string ShortName { get; set; }
 
-            //Format "U1 1"
-            public List<string> Pins = new List<string>();
+            public List<Pin> Pins = new List<Pin>();
 
             public static Net parse(string[] lines, ref int currentLine)
             {
-                
+
                 if (lines[currentLine].StartsWith("Net"))
                 {
                     Net net = new Net();
@@ -142,7 +144,16 @@ namespace PCB_Layout_GA
                     currentLine++;
                     while (lines[currentLine].StartsWith(" "))
                     {
-                        net.Pins.Add(lines[currentLine].Trim());
+                        string[] pins = lines[currentLine].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        int pinNumber = -1;
+                        try
+                        {
+                            pinNumber = Int32.Parse(pins[1]);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        net.Pins.Add(new Pin(pins[0], pinNumber));
                         currentLine++;
                     }
 
@@ -151,6 +162,19 @@ namespace PCB_Layout_GA
                 return null;
             }
 
+        }
+
+        public class Pin
+        {
+            public string ComponentName { get; set; }
+            public int PinNumber { get; set; }
+            public int ComponentID { get; set; }
+
+            public Pin(string componentID, int pinNumber)
+            {
+                ComponentName = componentID;
+                PinNumber = pinNumber;
+            }
         }
 
     }
