@@ -17,7 +17,18 @@ namespace PCB_Layout_GA
 
             NetList netList = new NetList();
             //Parse components
-
+            while (currentLine < lines.Length && !lines[currentLine].StartsWith("*"))
+            {
+                if (lines[currentLine].StartsWith(" ("))
+                {
+                    Component comp = Component.parse(lines, ref currentLine);
+                    netList.mComponents.Add(comp.ID, comp);
+                }
+                else
+                {
+                    currentLine++;
+                }
+            }
 
             //Parse Nets
             while (currentLine < lines.Length)
@@ -41,8 +52,32 @@ namespace PCB_Layout_GA
 
             public string Value { get; set; }
 
+            //Format e.g. "1 N-000001"
             public List<string> PinNets = new List<string>();
 
+
+            public static Component parse(string[] lines, ref int currentLine)
+            {
+                if (lines[currentLine].StartsWith(" ("))
+                {
+                    Component comp = new Component();
+                    List<string> strings = LibraryParser.SplitBySpaces(lines[currentLine]);
+                    comp.ID = strings[3];
+                    comp.Value = strings[4];
+
+                    currentLine++;
+                    //Parse pin nets
+                    while (lines[currentLine].StartsWith("  ("))
+                    {
+                        strings = LibraryParser.SplitBySpaces(lines[currentLine]);
+                        comp.PinNets.Add(strings[1] + " " + strings[2]);
+                        currentLine++;
+                    }
+
+                    return comp;
+                }
+                return null;
+            }
         }
 
         public class Net
