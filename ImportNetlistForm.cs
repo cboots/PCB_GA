@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PCB_Layout_GA
 {
@@ -28,10 +29,12 @@ namespace PCB_Layout_GA
             NetList netlist = NetList.parseNetlistFile(netlistpath);
 
             // load components file and get module requirements
-            logProgress(50, "Test Log");
+            
+            string componentpath = Path.ChangeExtension(netlistpath, ".cmp");
+            Dictionary<string, string> cmp_mod = NetList.parseComponentsFile(componentpath);
 
             // find and load required modules
-            
+            logProgress(50, "Test Log");
 
             // assemble final circuit listing
             

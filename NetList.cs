@@ -45,7 +45,44 @@ namespace PCB_Layout_GA
             }
             return netList;
         }
-        
+
+        public static Dictionary<string, string> parseComponentsFile(string componentpath)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            string[] lines = System.IO.File.ReadAllLines(componentpath);
+            int currentLine = 0;
+
+            while (currentLine < lines.Length)
+            {
+                if (lines[currentLine].StartsWith("BeginCmp"))
+                {
+                    string Reference = "";
+                    string Module = "";
+                    while (!lines[currentLine].StartsWith("EndCmp"))
+                    {
+                        
+                        if (lines[currentLine].StartsWith("Reference"))
+                        {
+                            Reference = lines[currentLine].Substring(12, lines[currentLine].Length - 13);//Trim Semicolon
+                        }
+                        else if (lines[currentLine].StartsWith("IdModule"))
+                        {
+                            Module = lines[currentLine].Substring(12, lines[currentLine].Length - 13);//Trim Semicolon
+                        }
+                        currentLine++;
+                    }
+                    dict.Add(Reference, Module);
+                }
+                else
+                {
+                    currentLine++;
+                }
+            }
+
+            return dict;
+
+        }
+
         public class Component
         {
             public string ID { get; set; }
@@ -115,5 +152,6 @@ namespace PCB_Layout_GA
             }
 
         }
+
     }
 }
