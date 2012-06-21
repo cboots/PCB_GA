@@ -34,6 +34,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.editModulePaths = new System.Windows.Forms.Button();
+            this.netlistOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +98,11 @@
             this.editModulePaths.UseVisualStyleBackColor = true;
             this.editModulePaths.Click += new System.EventHandler(this.editModulePaths_Click);
             // 
+            // netlistOpenFileDialog
+            // 
+            this.netlistOpenFileDialog.FileName = ".net";
+            this.netlistOpenFileDialog.Filter = "kicad netlist files (*.net)|*.net|All files (*.*)|*.*";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,6 +125,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button editModulePaths;
+        private System.Windows.Forms.OpenFileDialog netlistOpenFileDialog;
     }
 }
 

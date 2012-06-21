@@ -31,16 +31,13 @@ namespace PCB_Layout_GA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            folderBrowserDialog.ShowNewFolderButton = false;
-            folderBrowserDialog.RootFolder =
-                System.Environment.SpecialFolder.MyComputer;
+            
 
-            DialogResult result = folderBrowserDialog.ShowDialog();
+            DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
                 //Add to list
-                string path = folderBrowserDialog.SelectedPath;
+                string path = folderBrowserDialog1.SelectedPath;
 
                 if (!listView1.Items.ContainsKey(path))
                 {

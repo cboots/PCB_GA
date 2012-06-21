@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PCB_Layout_GA
 {
@@ -18,20 +19,31 @@ namespace PCB_Layout_GA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //TODO Launch Import Netlist Dialog
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\libcms.mod");
-            List<Module> modules = new List<Module>();
-            int currentLine = 0;
-            while (currentLine < lines.Length)
+            if (!File.Exists(netlistTextBox.Text))
             {
-                if (lines[currentLine].StartsWith("$MODULE"))
-                {
-                    Module mod = Module.parse(lines, ref currentLine);
-                    modules.Add(mod);
-                }
-                currentLine++;
+                MessageBox.Show("Netlist file not found");
+                return;
             }
-            currentLine++;
+
+            ImportNetlistForm importForm = new ImportNetlistForm();
+            importForm.NetlistPath = netlistTextBox.Text;
+            importForm.ShowDialog();
+
+            //TODO get result
+            
+            //string[] lines = System.IO.File.ReadAllLines(@"C:\Program Files (x86)\KiCad\share\modules\libcms.mod");
+            //List<Module> modules = new List<Module>();
+            //int currentLine = 0;
+            //while (currentLine < lines.Length)
+            //{
+            //    if (lines[currentLine].StartsWith("$MODULE"))
+            //    {
+            //        Module mod = Module.parse(lines, ref currentLine);
+            //        modules.Add(mod);
+            //    }
+            //    currentLine++;
+            //}
+            //currentLine++;
         }
 
         private void editModulePaths_Click(object sender, EventArgs e)
@@ -42,14 +54,12 @@ namespace PCB_Layout_GA
 
         private void netlistBrowseButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
-            dialog.Filter = "kicad netlist files (*.net)|*.net|All files (*.*)|*.*";
-            DialogResult result = dialog.ShowDialog();
+            
+            DialogResult result = this.netlistOpenFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
                 //Add to list
-                netlistTextBox.Text = dialog.FileName;
+                netlistTextBox.Text = this.netlistOpenFileDialog.FileName;
             }
         }
     }

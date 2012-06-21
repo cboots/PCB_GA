@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing.cs" />
+    <Compile Include="ImportNetlistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportNetlistForm.Designer.cs">
+      <DependentUpon>ImportNetlistForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,8 +68,12 @@
     <Compile Include="ModulePathEditor.Designer.cs">
       <DependentUpon>ModulePathEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="NetList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ImportNetlistForm.resx">
+      <DependentUpon>ImportNetlistForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
