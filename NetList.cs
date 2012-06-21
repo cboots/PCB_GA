@@ -146,14 +146,18 @@ namespace PCB_Layout_GA
                     {
                         string[] pins = lines[currentLine].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         int pinNumber = -1;
+                        
                         try
                         {
                             pinNumber = Int32.Parse(pins[1]);
                         }
                         catch (Exception)
                         {
+
                         }
-                        net.Pins.Add(new Pin(pins[0], pinNumber));
+                        Pin pin = new Pin(pins[0], pinNumber);
+                        pin.PinName = pins[1];
+                        net.Pins.Add(pin);
                         currentLine++;
                     }
 
@@ -168,6 +172,7 @@ namespace PCB_Layout_GA
         {
             public string ComponentName { get; set; }
             public int PinNumber { get; set; }
+            public String PinName { get; set; }
             public int ComponentID { get; set; }
 
             public Pin(string componentID, int pinNumber)
