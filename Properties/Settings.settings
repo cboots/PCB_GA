@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PCB_Layout_GA.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="LibrarySearchPaths" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\KiCad\share\modules;C:\Program Files (x86)\KiCad\;C:\Program Files (x86)\KiCad\share\library\doc;C:\Program Files (x86)\KiCad\share\template</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>
