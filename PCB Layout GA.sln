@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCB Layout GA", "PCB Layout GA.csproj", "{875BC8D1-1979-499D-8114-8439AF956287}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCB Layout GA", "PCB GA\PCB Layout GA.csproj", "{875BC8D1-1979-499D-8114-8439AF956287}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCBGeneticAlgorithm", "..\PCBGeneticAlgorithm\PCBGeneticAlgorithm.csproj", "{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCBGeneticAlgorithm", "PCBGeneticAlgorithm\PCBGeneticAlgorithm.csproj", "{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
