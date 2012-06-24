@@ -34,12 +34,39 @@ namespace PCB_Layout_GA
             if (result == DialogResult.OK)
             {
                 ImportedNetList = importForm.NetListResult;
+                adjustConstraintsButton.Enabled = true;
+                numComponentsLabel.Text = "Number of Components: " + ImportedNetList.mComponents.Keys.Count;
+                numNetsLabel.Text = "Number of Nets: " + ImportedNetList.mNets.Keys.Count;
+
+                int areaTotal = 0;
+                int minDimension = Int32.MaxValue;
+                foreach (NetList.Component comp in ImportedNetList.mComponents.Values)
+                {
+                    Module mod = comp.Mod;
+                    if (mod == null)
+                    {
+                        continue;
+                    }
+                    Rectangle rect = mod.getBoundingRectangle();
+                    areaTotal += rect.Width * rect.Height;
+
+                    int min = Math.Min(rect.Width, rect.Height);
+                    if (min < minDimension)
+                        minDimension = min;
+
+                }
+
+                totalModAreaLabel.Text = "Total Module Area: " + areaTotal;
+                minModuleDimLabel.Text = "Min Module Dim: " + minDimension;
+
+                //int gcd = ImportedNetList.calculateModuleSideGCD();
+                //gridSizeTextBox.Text = gcd.ToString();
+                gridSizeTextBox.Text = (minDimension / 2).ToString();
             }
             else
             {
                 MessageBox.Show("Netlist Import Failed");
             }
-            
             
         }
 
@@ -57,6 +84,25 @@ namespace PCB_Layout_GA
             {
                 //Add to list
                 netlistTextBox.Text = this.netlistOpenFileDialog.FileName;
+            }
+        }
+
+        private void adjustConstraintsButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                xstdTextBox.Enabled = true;
+                ystdTextBox.Enabled = true;
+            }
+            else
+            {
+                xstdTextBox.Enabled = false;
+                ystdTextBox.Enabled = false;
             }
         }
 

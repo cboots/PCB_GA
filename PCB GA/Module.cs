@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace PCB_Layout_GA
 {
@@ -30,6 +31,50 @@ namespace PCB_Layout_GA
 
         public String ComponentReference { get; set; }
         public String ComponentValue { get; set; }
+
+        public Rectangle getBoundingRectangle()
+        {
+            int minX = Int32.MaxValue;
+            int maxX = Int32.MinValue;
+            int minY = Int32.MaxValue;
+            int maxY = Int32.MinValue;
+
+            foreach (Drawing drawing in mDrawings)
+            {
+                int left = drawing.Left;
+                int right = drawing.Right;
+                int top = drawing.Top;
+                int bottom = drawing.Bottom;
+                if (left < minX)
+                    minX = left;
+                if (right > maxX)
+                    maxX = right;
+                if (top > maxY)
+                    maxY = top;
+                if (bottom < minY)
+                    minY = bottom;
+            }
+
+            foreach (Pad pad in mPads)
+            {
+                int left = pad.Left;
+                int right = pad.Right;
+                int top = pad.Top;
+                int bottom = pad.Bottom;
+                if (left < minX)
+                    minX = left;
+                if (right > maxX)
+                    maxX = right;
+                if (top > maxY)
+                    maxY = top;
+                if (bottom < minY)
+                    minY = bottom;
+            }
+
+            //Return in cartesian coordinates, not screen coordinates
+            return new Rectangle(minX, maxY, maxX - minX, maxY - minY); 
+        }
+
 
         public static Module parse(string[] lines, ref int currentLine)
         {
@@ -159,6 +204,25 @@ namespace PCB_Layout_GA
             public int DrillXOffset { get; set; }
             public int DrillYOffset { get; set; }
 
+            public int Left
+            {
+                get { return X - XSize/2; }
+            }
+
+            public int Right
+            {
+                get { return X + XSize / 2; }
+            }
+
+            public  int Bottom
+            {
+                get { return Y - YSize/2; }
+            }
+
+            public  int Top
+            {
+                get { return Y + YSize / 2; }
+            }
 
             public static Pad parse(string[] lines, ref int currentLine)
             {

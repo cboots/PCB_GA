@@ -63,6 +63,10 @@ namespace PCB_Layout_GA
                 {
                     //link up the appropriate module to the netlist
                     component.Mod = modules.FindModule(moduleLibName);
+                    if (component.Mod == null)
+                    {
+                        logProgress("Component: " + component.ID + " module not found: " + moduleLibName);
+                    }
                 }
 
             }

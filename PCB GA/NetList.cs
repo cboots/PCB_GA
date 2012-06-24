@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace PCB_Layout_GA
 {
@@ -83,6 +84,39 @@ namespace PCB_Layout_GA
             return dict;
 
         }
+
+        internal int calculateModuleSideGCD()
+        {
+            int[] sides = new int[mComponents.Values.Count * 2];
+
+            int i = 0;
+            foreach (Component comp in mComponents.Values)
+            {
+                Module mod = comp.Mod;
+                if (mod == null)
+                    return -1;//crash thread
+                Rectangle rect = mod.getBoundingRectangle();
+
+                sides[i] = rect.Height;
+                sides[i + 1] = rect.Width;
+
+                i += 2;
+            }
+
+            return GCD(sides);
+        }
+
+        static int GCD(int a, int b)
+        {
+            return b == 0 ? a : GCD(b, a % b);
+        }
+
+        static int GCD(int[] integerSet)
+        {
+            return integerSet.Aggregate(GCD);
+        }    
+
+        
 
         public class Component
         {
@@ -181,6 +215,7 @@ namespace PCB_Layout_GA
                 PinNumber = pinNumber;
             }
         }
+
 
     }
 }
