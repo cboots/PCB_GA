@@ -49,10 +49,10 @@ namespace PCB_Layout_GA
                     minX = left;
                 if (right > maxX)
                     maxX = right;
-                if (top > maxY)
-                    maxY = top;
-                if (bottom < minY)
-                    minY = bottom;
+                if (bottom > maxY)
+                    maxY = bottom;
+                if (top < minY)
+                    minY = top;
             }
 
             foreach (Pad pad in mPads)
@@ -65,14 +65,14 @@ namespace PCB_Layout_GA
                     minX = left;
                 if (right > maxX)
                     maxX = right;
-                if (top > maxY)
-                    maxY = top;
-                if (bottom < minY)
-                    minY = bottom;
+                if (bottom > maxY)
+                    maxY = bottom;
+                if (top < minY)
+                    minY = top;
             }
 
             //Return in cartesian coordinates, not screen coordinates
-            return new Rectangle(minX, maxY, maxX - minX, maxY - minY); 
+            return new Rectangle(minX, minY, maxX - minX, maxY - minY); 
         }
 
 
@@ -216,12 +216,13 @@ namespace PCB_Layout_GA
 
             public  int Bottom
             {
-                get { return Y - YSize/2; }
+                //+Y is down
+                get { return Y + YSize/2; }
             }
 
             public  int Top
             {
-                get { return Y + YSize / 2; }
+                get { return Y - YSize / 2; }
             }
 
             public static Pad parse(string[] lines, ref int currentLine)

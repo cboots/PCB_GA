@@ -9,8 +9,8 @@ namespace PCB_Layout_GA
 
     public class NetList
     {
-        public Dictionary<string, Component> mComponents = new Dictionary<string, Component>();
-        public Dictionary<int, Net> mNets = new Dictionary<int, Net>();
+        public SortedDictionary<string, Component> mComponents = new SortedDictionary<string, Component>();
+        public SortedDictionary<int, Net> mNets = new SortedDictionary<int, Net>();
 
         public static NetList parseNetlistFile(string netlistFile)
         {
@@ -127,6 +127,7 @@ namespace PCB_Layout_GA
             public Module Mod { get; set; }
 
             //Format e.g. "1 N-000001"
+            //            "D N-000002"
             public List<string> PinNets = new List<string>();
 
 

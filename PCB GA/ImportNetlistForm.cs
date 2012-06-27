@@ -65,7 +65,7 @@ namespace PCB_Layout_GA
                     component.Mod = modules.FindModule(moduleLibName);
                     if (component.Mod == null)
                     {
-                        logProgress("Component: " + component.ID + " module not found: " + moduleLibName);
+                        logProgress("Component: " + component.ID + " module not found: " + moduleLibName+"\n");
                     }
                 }
 

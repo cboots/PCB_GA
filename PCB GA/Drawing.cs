@@ -30,14 +30,14 @@ namespace PCB_Layout_GA
         int Y2 { get { return CenterX + CenterY - X1; } }
         int Angle { get; set; }
 
-        //TODO Wrong
+        
         public override int Left
         {
             get
             {
                 int dx = X1 - CenterX;
                 int dy = Y1 - CenterY;
-                if (dx < 0 && dy < 0)
+                if (dx < 0 && dy > 0)
                 {
                     //point 1 in quad 3, calculate radius
                     int radius = (int)Math.Sqrt(dx * dx + dy * dy);
@@ -54,7 +54,7 @@ namespace PCB_Layout_GA
             {
                 int dx = X1 - CenterX;
                 int dy = Y1 - CenterY;
-                if (dx > 0 && dy > 0)
+                if (dx > 0 && dy < 0)
                 {
                     //point 1 in quad 1, calculate radius
                     int radius = (int)Math.Sqrt(dx * dx + dy * dy);
@@ -70,13 +70,13 @@ namespace PCB_Layout_GA
             {
                 int dx = X1 - CenterX;
                 int dy = Y1 - CenterY;
-                if (dx < 0 && dy > 0)
+                if (dx < 0 && dy < 0)
                 {
                     //point 1 in quad 2, calculate radius
                     int radius = (int)Math.Sqrt(dx * dx + dy * dy);
-                    return CenterY + radius + Width / 2;
+                    return CenterY - radius - Width / 2;
                 }
-                return Math.Max(Y1, Y2) + Width / 2;
+                return Math.Min(Y1, Y2) - Width / 2;
             }
         }
 
@@ -86,13 +86,13 @@ namespace PCB_Layout_GA
             {
                 int dx = X1 - CenterX;
                 int dy = Y1 - CenterY;
-                if (dx > 0 && dy < 0)
+                if (dx > 0 && dy > 0)
                 {
                     //point 1 in quad 4, calculate radius
                     int radius = (int)Math.Sqrt(dx * dx + dy * dy);
-                    return CenterY - radius - Width / 2;
+                    return CenterY + radius + Width / 2;
                 }
-                return Math.Min(Y1, Y2) - Width / 2;
+                return Math.Max(Y1, Y2) + Width / 2;
             }
         }
 
@@ -135,12 +135,12 @@ namespace PCB_Layout_GA
 
         public override int Bottom
         {
-            get { return Math.Min(YEnd, YStart) - Width / 2; }
+            get { return Math.Max(YEnd, YStart) + Width / 2; }
         }
 
         public override int Top
         {
-            get { return Math.Max(YEnd, YStart) + Width / 2; }
+            get { return Math.Min(YEnd, YStart) - Width / 2; }
         }
 
         public override void draw(Graphics graphicsObj)
@@ -198,7 +198,7 @@ namespace PCB_Layout_GA
                 int dx = XCenter - XPoint;
                 int dy = YCenter - YPoint;
                 int radius = (int)Math.Sqrt(dx * dx + dy * dy);
-                return YCenter + radius + Width / 2;
+                return YCenter - radius - Width / 2;
             }
         }
 
@@ -209,7 +209,7 @@ namespace PCB_Layout_GA
                 int dx = XCenter - XPoint;
                 int dy = YCenter - YPoint;
                 int radius = (int)Math.Sqrt(dx * dx + dy * dy);
-                return YCenter - radius - Width / 2;
+                return YCenter + radius + Width / 2;
             }
         }
 

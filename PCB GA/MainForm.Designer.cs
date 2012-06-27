@@ -36,47 +36,49 @@
             this.editModulePaths = new System.Windows.Forms.Button();
             this.netlistOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.numNetsLabel = new System.Windows.Forms.Label();
-            this.numComponentsLabel = new System.Windows.Forms.Label();
+            this.totalModAreaLabel = new System.Windows.Forms.Label();
+            this.minModuleDimLabel = new System.Windows.Forms.Label();
             this.adjustConstraintsButton = new System.Windows.Forms.Button();
+            this.numComponentsLabel = new System.Windows.Forms.Label();
+            this.numNetsLabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.alphaTextBox = new System.Windows.Forms.TextBox();
-            this.betaTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ystdTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.xstdTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.genSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.maxGenTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.gridSizeTextBox = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.minModuleDimLabel = new System.Windows.Forms.Label();
-            this.totalModAreaLabel = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.gridSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.alphaTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.betaTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.xstdTextBox = new System.Windows.Forms.TextBox();
+            this.ystdTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.maxGenTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.genSizeTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -166,23 +168,23 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Circuit Data";
             // 
-            // numNetsLabel
+            // totalModAreaLabel
             // 
-            this.numNetsLabel.AutoSize = true;
-            this.numNetsLabel.Location = new System.Drawing.Point(7, 20);
-            this.numNetsLabel.Name = "numNetsLabel";
-            this.numNetsLabel.Size = new System.Drawing.Size(87, 13);
-            this.numNetsLabel.TabIndex = 0;
-            this.numNetsLabel.Text = "Number of Nets: ";
+            this.totalModAreaLabel.AutoSize = true;
+            this.totalModAreaLabel.Location = new System.Drawing.Point(152, 43);
+            this.totalModAreaLabel.Name = "totalModAreaLabel";
+            this.totalModAreaLabel.Size = new System.Drawing.Size(100, 13);
+            this.totalModAreaLabel.TabIndex = 4;
+            this.totalModAreaLabel.Text = "Total Module Area: ";
             // 
-            // numComponentsLabel
+            // minModuleDimLabel
             // 
-            this.numComponentsLabel.AutoSize = true;
-            this.numComponentsLabel.Location = new System.Drawing.Point(128, 20);
-            this.numComponentsLabel.Name = "numComponentsLabel";
-            this.numComponentsLabel.Size = new System.Drawing.Size(124, 13);
-            this.numComponentsLabel.TabIndex = 1;
-            this.numComponentsLabel.Text = "Number of Components: ";
+            this.minModuleDimLabel.AutoSize = true;
+            this.minModuleDimLabel.Location = new System.Drawing.Point(7, 43);
+            this.minModuleDimLabel.Name = "minModuleDimLabel";
+            this.minModuleDimLabel.Size = new System.Drawing.Size(89, 13);
+            this.minModuleDimLabel.TabIndex = 3;
+            this.minModuleDimLabel.Text = "Min Module Dim: ";
             // 
             // adjustConstraintsButton
             // 
@@ -196,10 +198,30 @@
             this.adjustConstraintsButton.UseVisualStyleBackColor = true;
             this.adjustConstraintsButton.Click += new System.EventHandler(this.adjustConstraintsButton_Click);
             // 
+            // numComponentsLabel
+            // 
+            this.numComponentsLabel.AutoSize = true;
+            this.numComponentsLabel.Location = new System.Drawing.Point(128, 20);
+            this.numComponentsLabel.Name = "numComponentsLabel";
+            this.numComponentsLabel.Size = new System.Drawing.Size(124, 13);
+            this.numComponentsLabel.TabIndex = 1;
+            this.numComponentsLabel.Text = "Number of Components: ";
+            // 
+            // numNetsLabel
+            // 
+            this.numNetsLabel.AutoSize = true;
+            this.numNetsLabel.Location = new System.Drawing.Point(7, 20);
+            this.numNetsLabel.Name = "numNetsLabel";
+            this.numNetsLabel.Size = new System.Drawing.Size(87, 13);
+            this.numNetsLabel.TabIndex = 0;
+            this.numNetsLabel.Text = "Number of Nets: ";
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.button2);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.gridSizeTextBox);
             this.groupBox3.Controls.Add(this.label13);
@@ -219,210 +241,54 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Genetic Algorithm Parameters";
             // 
-            // label2
+            // label14
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Alpha";
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(103, 48);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "x10^-4\"";
             // 
-            // alphaTextBox
+            // gridSizeTextBox
             // 
-            this.alphaTextBox.Location = new System.Drawing.Point(53, 19);
-            this.alphaTextBox.Name = "alphaTextBox";
-            this.alphaTextBox.Size = new System.Drawing.Size(46, 20);
-            this.alphaTextBox.TabIndex = 2;
-            this.alphaTextBox.Text = "1.0";
+            this.gridSizeTextBox.Location = new System.Drawing.Point(59, 45);
+            this.gridSizeTextBox.Name = "gridSizeTextBox";
+            this.gridSizeTextBox.Size = new System.Drawing.Size(37, 20);
+            this.gridSizeTextBox.TabIndex = 20;
+            this.gridSizeTextBox.Text = "200";
             // 
-            // betaTextBox
+            // label13
             // 
-            this.betaTextBox.Location = new System.Drawing.Point(140, 19);
-            this.betaTextBox.Name = "betaTextBox";
-            this.betaTextBox.Size = new System.Drawing.Size(46, 20);
-            this.betaTextBox.TabIndex = 4;
-            this.betaTextBox.Text = "1.0";
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 48);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Grid Size: ";
             // 
-            // label3
+            // textBox5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(105, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Beta";
+            this.textBox5.Location = new System.Drawing.Point(397, 19);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(46, 20);
+            this.textBox5.TabIndex = 18;
+            this.textBox5.Text = "5";
             // 
-            // ystdTextBox
+            // label12
             // 
-            this.ystdTextBox.Enabled = false;
-            this.ystdTextBox.Location = new System.Drawing.Point(140, 67);
-            this.ystdTextBox.Name = "ystdTextBox";
-            this.ystdTextBox.Size = new System.Drawing.Size(46, 20);
-            this.ystdTextBox.TabIndex = 8;
-            this.ystdTextBox.Text = "0.3";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 70);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Y std";
-            // 
-            // xstdTextBox
-            // 
-            this.xstdTextBox.Enabled = false;
-            this.xstdTextBox.Location = new System.Drawing.Point(53, 67);
-            this.xstdTextBox.Name = "xstdTextBox";
-            this.xstdTextBox.Size = new System.Drawing.Size(46, 20);
-            this.xstdTextBox.TabIndex = 6;
-            this.xstdTextBox.Text = "0.3";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 70);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "X std";
-            // 
-            // genSizeTextBox
-            // 
-            this.genSizeTextBox.Location = new System.Drawing.Point(101, 19);
-            this.genSizeTextBox.Name = "genSizeTextBox";
-            this.genSizeTextBox.Size = new System.Drawing.Size(46, 20);
-            this.genSizeTextBox.TabIndex = 10;
-            this.genSizeTextBox.Text = "500";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Generation Size: ";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 44);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(179, 17);
-            this.checkBox1.TabIndex = 11;
-            this.checkBox1.Text = "Use Random Selection Variation";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // maxGenTextBox
-            // 
-            this.maxGenTextBox.Location = new System.Drawing.Point(249, 19);
-            this.maxGenTextBox.Name = "maxGenTextBox";
-            this.maxGenTextBox.Size = new System.Drawing.Size(46, 20);
-            this.maxGenTextBox.TabIndex = 13;
-            this.maxGenTextBox.Text = "500";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(153, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Max Generations ";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.alphaTextBox);
-            this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.checkBox1);
-            this.groupBox4.Controls.Add(this.betaTextBox);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.xstdTextBox);
-            this.groupBox4.Controls.Add(this.ystdTextBox);
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Location = new System.Drawing.Point(6, 125);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 100);
-            this.groupBox4.TabIndex = 14;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Fitness Evaluation";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.textBox3);
-            this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.textBox2);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.textBox1);
-            this.groupBox5.Controls.Add(this.label8);
-            this.groupBox5.Location = new System.Drawing.Point(212, 125);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(131, 100);
-            this.groupBox5.TabIndex = 15;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Mutation Rates";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 22);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 13);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Rotation";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(69, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(46, 20);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.Text = "0.01";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(69, 45);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(46, 20);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.Text = "0.01";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 48);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Transpose";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(69, 71);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(46, 20);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.Text = "0.01";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 74);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(34, 13);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "Swap";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(301, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(93, 13);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Workspace Size x";
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.textBox4);
             this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Location = new System.Drawing.Point(349, 125);
+            this.groupBox6.Location = new System.Drawing.Point(349, 71);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(99, 37);
             this.groupBox6.TabIndex = 16;
@@ -446,66 +312,224 @@
             this.label11.TabIndex = 7;
             this.label11.Text = "Width";
             // 
-            // textBox5
+            // groupBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(397, 19);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(46, 20);
-            this.textBox5.TabIndex = 18;
-            this.textBox5.Text = "5";
+            this.groupBox5.Controls.Add(this.textBox3);
+            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.textBox2);
+            this.groupBox5.Controls.Add(this.label9);
+            this.groupBox5.Controls.Add(this.textBox1);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Location = new System.Drawing.Point(212, 71);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(131, 100);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Mutation Rates";
             // 
-            // label12
+            // textBox3
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(301, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(93, 13);
-            this.label12.TabIndex = 17;
-            this.label12.Text = "Workspace Size x";
+            this.textBox3.Location = new System.Drawing.Point(69, 71);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(46, 20);
+            this.textBox3.TabIndex = 10;
+            this.textBox3.Text = "0.01";
             // 
-            // minModuleDimLabel
+            // label10
             // 
-            this.minModuleDimLabel.AutoSize = true;
-            this.minModuleDimLabel.Location = new System.Drawing.Point(7, 43);
-            this.minModuleDimLabel.Name = "minModuleDimLabel";
-            this.minModuleDimLabel.Size = new System.Drawing.Size(89, 13);
-            this.minModuleDimLabel.TabIndex = 3;
-            this.minModuleDimLabel.Text = "Min Module Dim: ";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 74);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(34, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "Swap";
             // 
-            // totalModAreaLabel
+            // textBox2
             // 
-            this.totalModAreaLabel.AutoSize = true;
-            this.totalModAreaLabel.Location = new System.Drawing.Point(152, 43);
-            this.totalModAreaLabel.Name = "totalModAreaLabel";
-            this.totalModAreaLabel.Size = new System.Drawing.Size(100, 13);
-            this.totalModAreaLabel.TabIndex = 4;
-            this.totalModAreaLabel.Text = "Total Module Area: ";
+            this.textBox2.Location = new System.Drawing.Point(69, 45);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(46, 20);
+            this.textBox2.TabIndex = 8;
+            this.textBox2.Text = "0.01";
             // 
-            // label13
+            // label9
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 48);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 19;
-            this.label13.Text = "Grid Size: ";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 48);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(57, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Transpose";
             // 
-            // gridSizeTextBox
+            // textBox1
             // 
-            this.gridSizeTextBox.Location = new System.Drawing.Point(59, 45);
-            this.gridSizeTextBox.Name = "gridSizeTextBox";
-            this.gridSizeTextBox.Size = new System.Drawing.Size(37, 20);
-            this.gridSizeTextBox.TabIndex = 20;
-            this.gridSizeTextBox.Text = "200";
+            this.textBox1.Location = new System.Drawing.Point(69, 19);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(46, 20);
+            this.textBox1.TabIndex = 6;
+            this.textBox1.Text = "0.01";
             // 
-            // label14
+            // label8
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(103, 48);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 13);
-            this.label14.TabIndex = 21;
-            this.label14.Text = "x10^-4\"";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Rotation";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.alphaTextBox);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.checkBox1);
+            this.groupBox4.Controls.Add(this.betaTextBox);
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.xstdTextBox);
+            this.groupBox4.Controls.Add(this.ystdTextBox);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Location = new System.Drawing.Point(6, 71);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(200, 100);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Fitness Evaluation";
+            // 
+            // alphaTextBox
+            // 
+            this.alphaTextBox.Location = new System.Drawing.Point(53, 19);
+            this.alphaTextBox.Name = "alphaTextBox";
+            this.alphaTextBox.Size = new System.Drawing.Size(46, 20);
+            this.alphaTextBox.TabIndex = 2;
+            this.alphaTextBox.Text = "1.0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Alpha";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(105, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Beta";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(15, 44);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(179, 17);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "Use Random Selection Variation";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // betaTextBox
+            // 
+            this.betaTextBox.Location = new System.Drawing.Point(140, 19);
+            this.betaTextBox.Name = "betaTextBox";
+            this.betaTextBox.Size = new System.Drawing.Size(46, 20);
+            this.betaTextBox.TabIndex = 4;
+            this.betaTextBox.Text = "1.0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "X std";
+            // 
+            // xstdTextBox
+            // 
+            this.xstdTextBox.Enabled = false;
+            this.xstdTextBox.Location = new System.Drawing.Point(53, 67);
+            this.xstdTextBox.Name = "xstdTextBox";
+            this.xstdTextBox.Size = new System.Drawing.Size(46, 20);
+            this.xstdTextBox.TabIndex = 6;
+            this.xstdTextBox.Text = "0.3";
+            // 
+            // ystdTextBox
+            // 
+            this.ystdTextBox.Enabled = false;
+            this.ystdTextBox.Location = new System.Drawing.Point(140, 67);
+            this.ystdTextBox.Name = "ystdTextBox";
+            this.ystdTextBox.Size = new System.Drawing.Size(46, 20);
+            this.ystdTextBox.TabIndex = 8;
+            this.ystdTextBox.Text = "0.3";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(105, 70);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Y std";
+            // 
+            // maxGenTextBox
+            // 
+            this.maxGenTextBox.Location = new System.Drawing.Point(249, 19);
+            this.maxGenTextBox.Name = "maxGenTextBox";
+            this.maxGenTextBox.Size = new System.Drawing.Size(46, 20);
+            this.maxGenTextBox.TabIndex = 13;
+            this.maxGenTextBox.Text = "500";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(153, 22);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(90, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Max Generations ";
+            // 
+            // genSizeTextBox
+            // 
+            this.genSizeTextBox.Location = new System.Drawing.Point(101, 19);
+            this.genSizeTextBox.Name = "genSizeTextBox";
+            this.genSizeTextBox.Size = new System.Drawing.Size(46, 20);
+            this.genSizeTextBox.TabIndex = 10;
+            this.genSizeTextBox.Text = "500";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Generation Size: ";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(323, 202);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(134, 23);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "Run Genetic Algorithm";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(176, 201);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // MainForm
             // 
@@ -523,12 +547,12 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -578,6 +602,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox gridSizeTextBox;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 
