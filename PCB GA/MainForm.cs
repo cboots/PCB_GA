@@ -95,7 +95,7 @@ namespace PCB_Layout_GA
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (useRandomSelectionCheckbox.Checked)
             {
                 xstdTextBox.Enabled = true;
                 ystdTextBox.Enabled = true;
@@ -165,7 +165,7 @@ namespace PCB_Layout_GA
         private void button3_Click(object sender, EventArgs e)
         {
             GeneticAlgorithm ga = new GeneticAlgorithm();
-            ga.GridSize = Int32.Parse(gridSizeTextBox.Text);
+            SetGAParameters(ga);
 
             GAModule mod = ConvertComponent(ga, ImportedNetList.mComponents.Values.ElementAt(188));
 
@@ -190,6 +190,46 @@ namespace PCB_Layout_GA
                 Console.WriteLine();
             }
 
+        }
+
+        private void SetGAParameters(GeneticAlgorithm ga)
+        {
+            ga.GridSize = Int32.Parse(gridSizeTextBox.Text);
+            ga.XStd = Double.Parse(xstdTextBox.Text);
+            ga.YStd = Double.Parse(ystdTextBox.Text);
+            ga.Alpha = Double.Parse(alphaTextBox.Text);
+            ga.Beta = Double.Parse(betaTextBox.Text);
+            ga.CrossoverWidth = Double.Parse(crossoverWidthTextbox.Text);
+            ga.GenerationSize = Int32.Parse(genSizeTextBox.Text);
+            ga.MaxGeneration = Int32.Parse(maxGenTextBox.Text);
+            ga.MutationRateRotation = Double.Parse(rotationRateTextbox.Text);
+            ga.MutationRateSwap = Double.Parse(swapRateTextbox.Text);
+            ga.MutationRateTranspose = Double.Parse(transposeRateTextbox.Text);
+            
+
+            int areaTotal = 0;
+                int minDimension = Int32.MaxValue;
+                foreach (NetList.Component comp in ImportedNetList.mComponents.Values)
+                {
+                    Module mod = comp.Mod;
+                    if (mod == null)
+                    {
+                        continue;
+                    }
+                    Rectangle rect = mod.getBoundingRectangle();
+                    areaTotal += rect.Width * rect.Height;
+
+                    int min = Math.Min(rect.Width, rect.Height);
+                    if (min < minDimension)
+                        minDimension = min;
+
+                }
+
+            int root = (int) Math.Sqrt(areaTotal);
+            double multiplier = Double.Parse(workspaceSizeTextbox.Text);
+
+            ga.WorkspaceHeight = (int) (root * multiplier);
+            ga.WorkspaceWidth = (int) (root * multiplier);
         }
 
     }

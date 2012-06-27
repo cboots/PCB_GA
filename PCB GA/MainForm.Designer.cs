@@ -45,23 +45,23 @@
             this.label14 = new System.Windows.Forms.Label();
             this.gridSizeTextBox = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.workspaceSizeTextbox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.crossoverWidthTextbox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.swapRateTextbox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.transposeRateTextbox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.rotationRateTextbox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.alphaTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.useRandomSelectionCheckbox = new System.Windows.Forms.CheckBox();
             this.betaTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.xstdTextBox = new System.Windows.Forms.TextBox();
@@ -225,7 +225,7 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.gridSizeTextBox);
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.textBox5);
+            this.groupBox3.Controls.Add(this.workspaceSizeTextbox);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.groupBox5);
@@ -267,13 +267,13 @@
             this.label13.TabIndex = 19;
             this.label13.Text = "Grid Size: ";
             // 
-            // textBox5
+            // workspaceSizeTextbox
             // 
-            this.textBox5.Location = new System.Drawing.Point(397, 19);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(46, 20);
-            this.textBox5.TabIndex = 18;
-            this.textBox5.Text = "5";
+            this.workspaceSizeTextbox.Location = new System.Drawing.Point(397, 19);
+            this.workspaceSizeTextbox.Name = "workspaceSizeTextbox";
+            this.workspaceSizeTextbox.Size = new System.Drawing.Size(46, 20);
+            this.workspaceSizeTextbox.TabIndex = 18;
+            this.workspaceSizeTextbox.Text = "5";
             // 
             // label12
             // 
@@ -286,7 +286,7 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.textBox4);
+            this.groupBox6.Controls.Add(this.crossoverWidthTextbox);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Location = new System.Drawing.Point(349, 71);
             this.groupBox6.Name = "groupBox6";
@@ -295,13 +295,13 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Crossover";
             // 
-            // textBox4
+            // crossoverWidthTextbox
             // 
-            this.textBox4.Location = new System.Drawing.Point(43, 13);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(46, 20);
-            this.textBox4.TabIndex = 8;
-            this.textBox4.Text = "2";
+            this.crossoverWidthTextbox.Location = new System.Drawing.Point(43, 13);
+            this.crossoverWidthTextbox.Name = "crossoverWidthTextbox";
+            this.crossoverWidthTextbox.Size = new System.Drawing.Size(46, 20);
+            this.crossoverWidthTextbox.TabIndex = 8;
+            this.crossoverWidthTextbox.Text = "2";
             // 
             // label11
             // 
@@ -314,11 +314,11 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox3);
+            this.groupBox5.Controls.Add(this.swapRateTextbox);
             this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.textBox2);
+            this.groupBox5.Controls.Add(this.transposeRateTextbox);
             this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.textBox1);
+            this.groupBox5.Controls.Add(this.rotationRateTextbox);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Location = new System.Drawing.Point(212, 71);
             this.groupBox5.Name = "groupBox5";
@@ -327,13 +327,13 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Mutation Rates";
             // 
-            // textBox3
+            // swapRateTextbox
             // 
-            this.textBox3.Location = new System.Drawing.Point(69, 71);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(46, 20);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.Text = "0.01";
+            this.swapRateTextbox.Location = new System.Drawing.Point(69, 71);
+            this.swapRateTextbox.Name = "swapRateTextbox";
+            this.swapRateTextbox.Size = new System.Drawing.Size(46, 20);
+            this.swapRateTextbox.TabIndex = 10;
+            this.swapRateTextbox.Text = "0.01";
             // 
             // label10
             // 
@@ -344,13 +344,13 @@
             this.label10.TabIndex = 9;
             this.label10.Text = "Swap";
             // 
-            // textBox2
+            // transposeRateTextbox
             // 
-            this.textBox2.Location = new System.Drawing.Point(69, 45);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(46, 20);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.Text = "0.01";
+            this.transposeRateTextbox.Location = new System.Drawing.Point(69, 45);
+            this.transposeRateTextbox.Name = "transposeRateTextbox";
+            this.transposeRateTextbox.Size = new System.Drawing.Size(46, 20);
+            this.transposeRateTextbox.TabIndex = 8;
+            this.transposeRateTextbox.Text = "0.01";
             // 
             // label9
             // 
@@ -361,13 +361,13 @@
             this.label9.TabIndex = 7;
             this.label9.Text = "Transpose";
             // 
-            // textBox1
+            // rotationRateTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(69, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(46, 20);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.Text = "0.01";
+            this.rotationRateTextbox.Location = new System.Drawing.Point(69, 19);
+            this.rotationRateTextbox.Name = "rotationRateTextbox";
+            this.rotationRateTextbox.Size = new System.Drawing.Size(46, 20);
+            this.rotationRateTextbox.TabIndex = 6;
+            this.rotationRateTextbox.Text = "0.01";
             // 
             // label8
             // 
@@ -383,7 +383,7 @@
             this.groupBox4.Controls.Add(this.alphaTextBox);
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.checkBox1);
+            this.groupBox4.Controls.Add(this.useRandomSelectionCheckbox);
             this.groupBox4.Controls.Add(this.betaTextBox);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Controls.Add(this.xstdTextBox);
@@ -422,16 +422,16 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Beta";
             // 
-            // checkBox1
+            // useRandomSelectionCheckbox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 44);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(179, 17);
-            this.checkBox1.TabIndex = 11;
-            this.checkBox1.Text = "Use Random Selection Variation";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.useRandomSelectionCheckbox.AutoSize = true;
+            this.useRandomSelectionCheckbox.Location = new System.Drawing.Point(15, 44);
+            this.useRandomSelectionCheckbox.Name = "useRandomSelectionCheckbox";
+            this.useRandomSelectionCheckbox.Size = new System.Drawing.Size(179, 17);
+            this.useRandomSelectionCheckbox.TabIndex = 11;
+            this.useRandomSelectionCheckbox.Text = "Use Random Selection Variation";
+            this.useRandomSelectionCheckbox.UseVisualStyleBackColor = true;
+            this.useRandomSelectionCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // betaTextBox
             // 
@@ -573,16 +573,16 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox swapRateTextbox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox transposeRateTextbox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox rotationRateTextbox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox alphaTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox useRandomSelectionCheckbox;
         private System.Windows.Forms.TextBox betaTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox xstdTextBox;
@@ -593,9 +593,9 @@
         private System.Windows.Forms.TextBox genSizeTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox crossoverWidthTextbox;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox workspaceSizeTextbox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label minModuleDimLabel;
         private System.Windows.Forms.Label totalModAreaLabel;
