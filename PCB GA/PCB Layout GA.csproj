@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing.cs" />
+    <Compile Include="GARunForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GARunForm.Designer.cs">
+      <DependentUpon>GARunForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImportNetlistForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="NetList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GARunForm.resx">
+      <DependentUpon>GARunForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImportNetlistForm.resx">
       <DependentUpon>ImportNetlistForm.cs</DependentUpon>
     </EmbeddedResource>

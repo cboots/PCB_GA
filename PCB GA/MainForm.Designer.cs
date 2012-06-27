@@ -42,6 +42,7 @@
             this.numComponentsLabel = new System.Windows.Forms.Label();
             this.numNetsLabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.runGaButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.gridSizeTextBox = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -71,8 +72,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.genSizeTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -220,8 +219,7 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.button3);
-            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.runGaButton);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.gridSizeTextBox);
             this.groupBox3.Controls.Add(this.label13);
@@ -240,6 +238,16 @@
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Genetic Algorithm Parameters";
+            // 
+            // runGaButton
+            // 
+            this.runGaButton.Location = new System.Drawing.Point(323, 202);
+            this.runGaButton.Name = "runGaButton";
+            this.runGaButton.Size = new System.Drawing.Size(134, 23);
+            this.runGaButton.TabIndex = 22;
+            this.runGaButton.Text = "Run Genetic Algorithm";
+            this.runGaButton.UseVisualStyleBackColor = true;
+            this.runGaButton.Click += new System.EventHandler(this.runGaButton_Click);
             // 
             // label14
             // 
@@ -511,26 +519,6 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Generation Size: ";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(323, 202);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 23);
-            this.button2.TabIndex = 22;
-            this.button2.Text = "Run Genetic Algorithm";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(176, 201);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -602,8 +590,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox gridSizeTextBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button runGaButton;
     }
 }
 

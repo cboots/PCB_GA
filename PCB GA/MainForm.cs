@@ -107,7 +107,7 @@ namespace PCB_Layout_GA
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void runGaButton_Click(object sender, EventArgs e)
         {
             GeneticAlgorithm ga = new GeneticAlgorithm();
             
@@ -125,6 +125,71 @@ namespace PCB_Layout_GA
                 i++;
             }
 
+
+            int n = 0;
+            //convert nets
+            foreach (KeyValuePair<int, NetList.Net> pair in ImportedNetList.mNets)
+            {
+                gaNets[n] = ConvertNet(gaModules, pair.Value);
+                n++;
+            }
+
+            //Store to GA
+            ga.Nets = gaNets;
+            ga.Modules = gaModules;
+
+
+            //Finished setting up GA algorithm parameters
+            //Launch ga running dialog
+            GARunForm runForm = new GARunForm();
+            runForm.GA = ga;
+
+            DialogResult result = runForm.ShowDialog();
+
+        }
+
+        private GANet ConvertNet(GAModule[] gaModules, NetList.Net net)
+        {
+            int[,] connections = new int[net.Pins.Count, 2];
+            for (int p = 0; p < net.Pins.Count; p++)
+            {
+                NetList.Pin pin = net.Pins[p];
+                int idx = findGAModuleIndex(pin.ComponentName, gaModules);
+                if (idx == -1)
+                {
+                    throw new KeyNotFoundException("Could not find module: " + pin.ComponentName);
+                }
+                connections[p, 0] = idx;//Module index
+
+                int pinIdx = findPinIndex(pin.PinName, gaModules[idx]);
+                if (pinIdx == -1)
+                {
+                    throw new KeyNotFoundException("Could not find pin: " + pin.PinName + " in module " + gaModules[idx].ComponentReference);
+                }
+                connections[p, 1] = pinIdx;
+            }
+            GANet gaNet = new GANet(net.FullName, connections);
+            return gaNet;
+        }
+
+        private int findGAModuleIndex(string componentName, GAModule[] gaModules)
+        {
+            for (int i = 0; i < gaModules.Length; i++)
+            {
+                if (gaModules[i].ComponentReference.Equals(componentName))
+                    return i;
+            }
+            return -1;
+        }
+
+        private int findPinIndex(string pinName, GAModule module)
+        {
+            for (int i = 0; i < module.Pins.Length; i++)
+            {
+                if (module.Pins[i].PinName.Equals(pinName))
+                    return i;
+            }
+            return -1;
         }
 
         private static GAModule ConvertComponent(GeneticAlgorithm ga, NetList.Component comp)
@@ -155,42 +220,14 @@ namespace PCB_Layout_GA
                 int padX = (pad.X - rect.X) / ga.GridSize;
                 int padY = (pad.Y - rect.Y) / ga.GridSize;//inverted y-axis
 
-                pins[j] = new GAModule.GAModulePin(padX, padY, convertedWidth, convertedHeight);
+                pins[j] = new GAModule.GAModulePin(pad.PadName, padX, padY, convertedWidth, convertedHeight);
                 j++;
             }
 
             return new GAModule(comp.ID, convertedWidth, convertedHeight, pins);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            GeneticAlgorithm ga = new GeneticAlgorithm();
-            SetGAParameters(ga);
-
-            GAModule mod = ConvertComponent(ga, ImportedNetList.mComponents.Values.ElementAt(188));
-
-            int i = 0;
-            i++;
-
-            int[,] array = new int[mod.Width, mod.Height];
-            for (int j = 0; j < mod.Pins.Length; j++)
-            {
-                int x = mod.Pins[j].getX(0);
-                int y = mod.Pins[j].getY(0);
-                array[x, y] = j + 1;
-            }
-
-            for (int y = 0; y <= array.GetUpperBound(1); y++)
-            {
-                for (int x = 0; x <= array.GetUpperBound(0); x++)
-                {
-                    Console.Write(array[x, y] + " ");
-                }
-
-                Console.WriteLine();
-            }
-
-        }
+       
 
         private void SetGAParameters(GeneticAlgorithm ga)
         {
@@ -228,9 +265,10 @@ namespace PCB_Layout_GA
             int root = (int) Math.Sqrt(areaTotal);
             double multiplier = Double.Parse(workspaceSizeTextbox.Text);
 
-            ga.WorkspaceHeight = (int) (root * multiplier);
-            ga.WorkspaceWidth = (int) (root * multiplier);
+            ga.WorkspaceHeight = (int)(root * multiplier) / ga.GridSize;
+            ga.WorkspaceWidth = (int)(root * multiplier) / ga.GridSize;
         }
+
 
     }
 }

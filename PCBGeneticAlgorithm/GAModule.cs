@@ -32,6 +32,8 @@ namespace PCBGeneticAlgorithm
         {
             private int[] X;
             private int[] Y;
+            private string mPinName;
+            public string PinName { get { return mPinName; } }
 
             /// <summary>
             /// Takes the unrotated module pin coordinates and calculates out all the rotations.
@@ -43,8 +45,9 @@ namespace PCBGeneticAlgorithm
             /// <param name="parentHeight"></param>
             /// <param name="parentWidth"></param>
             /// <param name="parent"></param>
-            public GAModulePin(int x, int y, int parentWidth, int parentHeight)
+            public GAModulePin(string pinName, int x, int y, int parentWidth, int parentHeight)
             {
+                mPinName = pinName;
                 X = new int[4];
                 Y = new int[4];
                 X[0] = x;
