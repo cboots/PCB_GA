@@ -7,6 +7,7 @@ namespace PCBGeneticAlgorithm
 {
     public class GeneticAlgorithm
     {
+        private Random rand = new Random();
 
         public GAModule[] Modules { get; set; }
         public GANet[] Nets { get; set; }
@@ -30,12 +31,13 @@ namespace PCBGeneticAlgorithm
 
         public double CrossoverWidth { get; set; }
 
-
         public GALayout GenerateRandomLayout()
         {
             GALayout layout = new GALayout(WorkspaceWidth, WorkspaceHeight);
 
-            for (int i = 0; i < Modules.Length; i++ )
+            //Reverse order.  Larger chips tend to have U* designations
+            //More efficient
+            for (int i = Modules.Length-1; i >= 0; i-- )
             {
                 bool placed = RandomlyPlaceModule(layout.Layout, i);
                 if (!placed)
@@ -53,18 +55,17 @@ namespace PCBGeneticAlgorithm
 
             GAModule mod = Modules[moduleIndex];
 
-            Random r = new Random();
-            for(int tries = 0; tries < 50; tries++)
+            for(int tries = 0; tries < 500; tries++)
             {
-                int rot = r.Next(4);//Rotation (0-3)
+                int rot = rand.Next(4);//Rotation (0-3)
 
                 //Get rotated module dims
                 int mWidth = ((rot % 2) == 0) ? mod.Width : mod.Height;
                 int mHeight = ((rot % 2) == 0) ? mod.Height : mod.Width;
 
                 //Find upper left corner position, ignoring invalid right and lower regions
-                int x = r.Next(width - mWidth);
-                int y = r.Next(height - mHeight);
+                int x = rand.Next(width - mWidth);
+                int y = rand.Next(height - mHeight);
 
                 bool fits = true;
                 for (int m = x; m < x + mWidth; m++)
@@ -85,7 +86,7 @@ namespace PCBGeneticAlgorithm
                 {
                     //Place module
                     PlaceModule(layout, moduleIndex, rot, mWidth, mHeight, x, y);
-
+                    //Console.WriteLine("Tries for " + Modules[moduleIndex].ComponentReference + "=" + tries);
                     return true;
                 }
 

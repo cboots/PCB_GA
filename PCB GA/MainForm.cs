@@ -112,7 +112,7 @@ namespace PCB_Layout_GA
             GeneticAlgorithm ga = new GeneticAlgorithm();
             
             //Initialize parameters
-            ga.GridSize = Int32.Parse(gridSizeTextBox.Text);
+            SetGAParameters(ga);
 
             //Convert modules
             GAModule[]  gaModules = new GAModule[ImportedNetList.mComponents.Values.Count];
@@ -143,6 +143,12 @@ namespace PCB_Layout_GA
             //Launch ga running dialog
             GARunForm runForm = new GARunForm();
             runForm.GA = ga;
+
+            GALayout layout = ga.GenerateRandomLayout();
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testData.txt"))
+            {
+                print2DArray(layout.Layout, writer);
+            }
 
             DialogResult result = runForm.ShowDialog();
 
@@ -267,9 +273,34 @@ namespace PCB_Layout_GA
 
             ga.WorkspaceHeight = (int)(root * multiplier) / ga.GridSize;
             ga.WorkspaceWidth = (int)(root * multiplier) / ga.GridSize;
+
+
         }
 
+        public static void print2DArray(ushort[,] array)
+        {
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                for (int j = 0; j < array.GetLength(0); j++)
+                {
+                    Console.Write(array[j, i] + " ");
+                }
+                Console.WriteLine();
+            }
 
+        }
+
+        public static void print2DArray(ushort[,] array, StreamWriter writer)
+        {
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                for (int j = 0; j < array.GetLength(0); j++)
+                {
+                    writer.Write(array[j, i] + " ");
+                }
+                writer.WriteLine();
+            }
+        }
 
     }
 }
