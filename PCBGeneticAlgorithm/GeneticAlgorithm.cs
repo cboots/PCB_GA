@@ -30,5 +30,106 @@ namespace PCBGeneticAlgorithm
 
         public double CrossoverWidth { get; set; }
 
+
+        public GALayout GenerateRandomLayout()
+        {
+            GALayout layout = new GALayout(WorkspaceWidth, WorkspaceHeight);
+
+            for (int i = 0; i < Modules.Length; i++ )
+            {
+                bool placed = RandomlyPlaceModule(layout.Layout, i);
+                if (!placed)
+                {
+                    throw new Exception("Failed to place module. Could not find enough space for " + Modules[i].ComponentReference);
+                }
+            }
+            return layout;
+        }
+
+        private bool RandomlyPlaceModule(ushort[,] layout, int moduleIndex)
+        {
+            int width = layout.GetLength(0);
+            int height = layout.GetLength(1);
+
+            GAModule mod = Modules[moduleIndex];
+
+            Random r = new Random();
+            for(int tries = 0; tries < 50; tries++)
+            {
+                int rot = r.Next(4);//Rotation (0-3)
+
+                //Get rotated module dims
+                int mWidth = ((rot % 2) == 0) ? mod.Width : mod.Height;
+                int mHeight = ((rot % 2) == 0) ? mod.Height : mod.Width;
+
+                //Find upper left corner position, ignoring invalid right and lower regions
+                int x = r.Next(width - mWidth);
+                int y = r.Next(height - mHeight);
+
+                bool fits = true;
+                for (int m = x; m < x + mWidth; m++)
+                {
+                    if (!fits)
+                        break;
+
+                    for (int n = y; n < y + mHeight; n++)
+                    {
+                        if (layout[m, n] != 0)
+                        {
+                            fits = false;
+                            break;
+                        }
+                    }
+                }
+                if (fits)
+                {
+                    //Place module
+                    PlaceModule(layout, moduleIndex, rot, mWidth, mHeight, x, y);
+
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        private static void PlaceModule(ushort[,] layout, int moduleIndex, int rotation, int mWidth, int mHeight, int x, int y)
+        {
+            ushort moduleID = (ushort)((moduleIndex + 1) << 2);
+            for (int m = x; m < x + mWidth; m++)
+            {
+                for (int n = y; n < y + mHeight; n++)
+                {
+                    if (m == x && n == y)
+                    {
+                        //Upper left corner (0)
+                        layout[m, n] = (ushort)(moduleID | ((0 + rotation) % 4));
+
+                    }
+                    else if (m == x + mWidth - 1 && n == y)
+                    {
+                        //Upper right corner (1)
+                        layout[m, n] = (ushort)(moduleID | ((1 + rotation) % 4));
+                    }
+                    else if (m == x + mWidth - 1 && n == y + mHeight - 1)
+                    {
+                        //Lower right corner (2)
+                        layout[m, n] = (ushort)(moduleID | ((2 + rotation) % 4));
+                    }
+                    else if (m == x && n == y + mHeight - 1)
+                    {
+                        //Lower left corner (3)
+                        layout[m, n] = (ushort)(moduleID | ((3 + rotation) % 4));
+                    }
+                    else
+                    {
+                        //All others
+                        layout[m, n] = moduleID;
+                    }
+                }
+            }
+        }
+
+
     }
 }
