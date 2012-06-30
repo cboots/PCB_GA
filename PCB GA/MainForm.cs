@@ -149,7 +149,6 @@ namespace PCB_Layout_GA
             {
                 print2DArray(layout.Layout, writer);
             }
-
             DialogResult result = runForm.ShowDialog();
 
         }

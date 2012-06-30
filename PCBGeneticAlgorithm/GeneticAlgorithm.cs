@@ -31,6 +31,7 @@ namespace PCBGeneticAlgorithm
 
         public double CrossoverWidth { get; set; }
 
+
         public GALayout GenerateRandomLayout()
         {
             GALayout layout = new GALayout(WorkspaceWidth, WorkspaceHeight);
