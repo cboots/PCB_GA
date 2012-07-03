@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCB Layout GA", "PCB GA\PCB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCBGeneticAlgorithm", "PCBGeneticAlgorithm\PCBGeneticAlgorithm.csproj", "{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelaunayTriangulation", "DelaunayTriangulation\DelaunayTriangulation.csproj", "{04396B7E-4566-4920-AC03-D5360604DF33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04396B7E-4566-4920-AC03-D5360604DF33}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

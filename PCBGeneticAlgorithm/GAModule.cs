@@ -28,6 +28,16 @@ namespace PCBGeneticAlgorithm
             mPins = pins;
         }
 
+        public int getRotatedWidth(int rot)
+        {
+            return ((rot % 2) == 0) ? Width : Height;
+        }
+
+        public int getRotatedHeight(int rot)
+        {
+            return ((rot % 2) == 0) ? Height : Width;
+        }
+
         public struct GAModulePin
         {
             private int[] X;
