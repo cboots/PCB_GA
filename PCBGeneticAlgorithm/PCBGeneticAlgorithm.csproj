@@ -49,6 +49,12 @@
     <Compile Include="GAModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DelaunayTriangulation\DelaunayTriangulation.csproj">
+      <Project>{04396B7E-4566-4920-AC03-D5360604DF33}</Project>
+      <Name>DelaunayTriangulation</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

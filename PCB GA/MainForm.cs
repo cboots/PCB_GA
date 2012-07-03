@@ -149,6 +149,11 @@ namespace PCB_Layout_GA
             {
                 print2DArray(layout.Layout, writer);
             }
+            FitnessEvaluator.LocateModules(ga, layout);
+            FitnessEvaluator.AssessRawAreaFitness(ga, layout);
+            FitnessEvaluator.AssessRawNetFitness(ga, layout);
+
+
             DialogResult result = runForm.ShowDialog();
 
         }
