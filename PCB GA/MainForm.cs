@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using PCBGeneticAlgorithm;
+using System.Diagnostics;
 
 namespace PCB_Layout_GA
 {
@@ -149,13 +150,53 @@ namespace PCB_Layout_GA
             {
                 print2DArray(layout.Layout, writer);
             }
-            FitnessEvaluator.LocateModules(ga, layout);
-            FitnessEvaluator.AssessRawAreaFitness(ga, layout);
-            FitnessEvaluator.AssessRawNetFitness(ga, layout);
 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            GALayout[] testGen = new GALayout[ga.GenerationSize];
+            for (i = 0; i < ga.GenerationSize; i++)
+            {
+                testGen[i] = ga.GenerateRandomLayout();
+            }
+
+            watch.Stop();
+            Console.WriteLine("Random Generation: " + watch.ElapsedMilliseconds + "ms");
+
+            watch.Restart();
+            FitnessEvaluator.EvaluateGenerationFitness(ga, testGen);
+            watch.Stop();
+            Console.WriteLine("FitnessEval: " + watch.ElapsedMilliseconds + "ms");
+
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\fitness.txt"))
+            {
+                foreach (GALayout l in testGen)
+                {
+                    printFitness(writer, l);
+                }
+            }
 
             DialogResult result = runForm.ShowDialog();
 
+        }
+
+        private static void printFitness(StreamWriter writer, GALayout l)
+        {
+            writer.Write(l.RawAreaFitness);
+            writer.Write(' ');
+            writer.Write(l.RawNetFitness);
+            writer.Write(' ');
+            writer.Write(l.RawConstraintViolations);
+            writer.Write(' ');
+            writer.Write(l.F1);
+            writer.Write(' ');
+            writer.Write(l.F2);
+            writer.Write(' ');
+            writer.Write(l.F3);
+            writer.Write(' ');
+            writer.Write(l.Fitness);
+            writer.Write(' ');
+            writer.Write(l.VariedFitness);
+            writer.WriteLine();
         }
 
         private GANet ConvertNet(GAModule[] gaModules, NetList.Net net)
@@ -242,10 +283,11 @@ namespace PCB_Layout_GA
         private void SetGAParameters(GeneticAlgorithm ga)
         {
             ga.GridSize = Int32.Parse(gridSizeTextBox.Text);
-            ga.XStd = Double.Parse(xstdTextBox.Text);
-            ga.YStd = Double.Parse(ystdTextBox.Text);
+            ga.XStd = this.useRandomSelectionCheckbox.Checked ? Double.Parse(xstdTextBox.Text) : 0.0;
+            ga.YStd = this.useRandomSelectionCheckbox.Checked ? Double.Parse(ystdTextBox.Text) : 0.0;
             ga.Alpha = Double.Parse(alphaTextBox.Text);
             ga.Beta = Double.Parse(betaTextBox.Text);
+            ga.Gamma = Double.Parse(gammaTextBox.Text);
             ga.CrossoverWidth = Double.Parse(crossoverWidthTextbox.Text);
             ga.GenerationSize = Int32.Parse(genSizeTextBox.Text);
             ga.MaxGeneration = Int32.Parse(maxGenTextBox.Text);

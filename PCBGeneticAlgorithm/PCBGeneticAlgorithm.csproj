@@ -48,6 +48,7 @@
     <Compile Include="GeneticAlgorithm.cs" />
     <Compile Include="GAModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomNorm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DelaunayTriangulation\DelaunayTriangulation.csproj">

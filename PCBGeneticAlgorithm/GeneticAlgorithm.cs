@@ -18,6 +18,7 @@ namespace PCBGeneticAlgorithm
 
         public double Alpha { get; set; }
         public double Beta { get; set; }
+        public double Gamma { get; set; }
 
         public int GenerationSize { get; set; }
         public int MaxGeneration { get; set; }
@@ -131,7 +132,5 @@ namespace PCBGeneticAlgorithm
                 }
             }
         }
-
-
     }
 }

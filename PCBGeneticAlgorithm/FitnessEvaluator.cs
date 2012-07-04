@@ -9,6 +9,41 @@ namespace PCBGeneticAlgorithm
 {
     public class FitnessEvaluator
     {
+        private static RandomNorm sRandomNorm = null;
+        public static void EvaluateGenerationFitness(GeneticAlgorithm ga, GALayout[] generation)
+        {
+            foreach (GALayout layout in generation)
+            {
+                LocateModules(ga, layout);
+                AssessRawAreaFitness(ga, layout);
+                AssessRawNetFitness(ga, layout);
+                AssessRawConstraintViolations(ga, layout);
+            }
+
+            CalculateNormalizedF1(generation);
+            CalculateNormalizedF2(generation);
+            CalculateF3(generation);
+
+            foreach (GALayout layout in generation)
+            {
+                CalculateFitness(ga, layout);
+            }
+        }
+
+        private static void AssessRawConstraintViolations(GeneticAlgorithm ga, GALayout layout)
+        {
+            //TODO Implement
+            layout.RawConstraintViolations = 0;
+        }
+
+        private static void CalculateF3(GALayout[] generation)
+        {
+            foreach (GALayout layout in generation)
+            {
+                layout.F3 = layout.RawConstraintViolations;
+            }
+        }
+
 
         public static void LocateModules(GeneticAlgorithm ga, GALayout layout)
         {
@@ -124,6 +159,102 @@ namespace PCBGeneticAlgorithm
             return points;
         }
 
+        private static void CalculateNormalizedF1(GALayout[] layouts)
+        {
+            int n = 0;
+            double sum1 = 0;
+            double sum2 = 0;
+
+            foreach (GALayout layout in layouts)
+            {
+                n++;
+                sum1 += layout.RawAreaFitness;
+            }
+
+            double mean = sum1 / n;
+
+            foreach (GALayout layout in layouts)
+            {
+                sum2 += (layout.RawAreaFitness - mean)*(layout.RawAreaFitness - mean);
+            }
+
+            double std = Math.Sqrt(sum2 / (n - 1));
+
+            foreach (GALayout layout in layouts)
+            {
+                //TODO improve normalization equation based on statistical analysis of data set
+                layout.F1 = (layout.RawAreaFitness - mean) / std;
+            }
+        }
+
+        private static void CalculateNormalizedF2(GALayout[] layouts)
+        {
+            int n = 0;
+            double sum1 = 0;
+            double sum2 = 0;
+
+            foreach (GALayout layout in layouts)
+            {
+                n++;
+                sum1 += layout.RawNetFitness;
+            }
+
+            double mean = sum1 / n;
+
+            foreach (GALayout layout in layouts)
+            {
+                sum2 += (layout.RawNetFitness - mean) * (layout.RawNetFitness - mean);
+            }
+
+            double std = Math.Sqrt(sum2 / (n - 1));
+
+            foreach (GALayout layout in layouts)
+            {
+                //TODO improve normalization equation based on statistical analysis of data set
+                layout.F2 = (layout.RawNetFitness - mean) / std;
+            }
+        }
+
+        private static void CalculateFitness(GeneticAlgorithm ga, GALayout layout)
+        {
+            layout.Fitness = ga.Alpha * layout.F1 + ga.Beta * layout.F2 + ga.Gamma * layout.F3;
+            if(ga.XStd > 0 || ga.YStd > 0)
+            {
+                if(sRandomNorm == null)
+                {
+                    sRandomNorm = new RandomNorm();
+                }
+
+                double X;
+                double Y; 
+                sRandomNorm.GetNextTwo(out X, out Y, 1.0, 1.0, ga.XStd, ga.YStd);
+                layout.VariedFitness = ga.Alpha * X * layout.F1 + ga.Beta * Y * layout.F2 + ga.Gamma * layout.F3;
+
+            }else{
+                layout.VariedFitness = layout.Fitness;
+            }
+        }
+
+        private static double CalculateNetLength2(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        {
+
+            List<Vertex> points = GetPinLocations(ga, net, locations);
+
+            return points[0].distanceTo(points[1]);
+        }
+
+        private static double CalculateNetLength3(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        {
+            List<Vertex> points = GetPinLocations(ga, net, locations);
+
+            double len0 = points[0].distanceTo(points[1]);
+            double len1 = points[1].distanceTo(points[2]);
+            double len2 = points[2].distanceTo(points[0]);
+
+            //Return sum of lengths minus longest connection
+            return len0 + len1 + len2 - Math.Max(Math.Max(len0, len1), len2);
+        }
+
         private static double CalculateNetLengthEuclidean(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
         {
             List<Vertex> points = GetPinLocations(ga, net, locations);
@@ -175,14 +306,14 @@ namespace PCBGeneticAlgorithm
                 //Add any edges to open set
                 for (int i = 0; i < points.Count; i++)
                 {
-                        if (adjMatrix[currentVertex, i] > 0)
-                        {
+                    if (adjMatrix[currentVertex, i] > 0)
+                    {
 
-                            Edge edge = new Edge(currentVertex, i, adjMatrix[currentVertex, i]);
-                            //TODO Optimize
-                            if(!openSet.Contains(edge) && !EMST.Contains(edge))
-                                openSet.Add(edge);
-                        }
+                        Edge edge = new Edge(currentVertex, i, adjMatrix[currentVertex, i]);
+                        //TODO Optimize
+                        if(!openSet.Contains(edge) && !EMST.Contains(edge))
+                            openSet.Add(edge);
+                    }
                     
                 }
 
@@ -203,7 +334,7 @@ namespace PCBGeneticAlgorithm
             return EMST;
         }
 
-        class Edge:IComparable
+        class Edge : IComparable
         {
             int mU;
             public int U { get { return mU; } }
@@ -214,7 +345,8 @@ namespace PCBGeneticAlgorithm
             double mLength;
             public double Length { get { return mLength; } }
 
-            public Edge(int u, int v, double length){
+            public Edge(int u, int v, double length)
+            {
                 mU = u;
                 mV = v;
                 mLength = length;
@@ -249,32 +381,5 @@ namespace PCBGeneticAlgorithm
                 return U ^ V ^ (int)Length;
             }
         }
-
-
-
-        private static double CalculateNetLength2(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
-        {
-
-            List<Vertex> points = GetPinLocations(ga, net, locations);
-
-            return points[0].distanceTo(points[1]);
-        }
-
-        private static double CalculateNetLength3(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
-        {
-            
-            List<Vertex> points = GetPinLocations(ga, net, locations);
-
-
-            double len0 = points[0].distanceTo(points[1]);
-            double len1 = points[1].distanceTo(points[2]);
-            double len2 = points[2].distanceTo(points[0]);
-
-
-            //Return sum of lengths minus longest connection
-            return len0 + len1 + len2 - Math.Max(Math.Max(len0, len1), len2);
-        }
-
-
     }
 }

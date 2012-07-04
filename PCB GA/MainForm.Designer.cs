@@ -72,6 +72,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.genSizeTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.gammaTextBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -388,6 +390,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.gammaTextBox);
+            this.groupBox4.Controls.Add(this.label15);
             this.groupBox4.Controls.Add(this.alphaTextBox);
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.label3);
@@ -399,7 +403,7 @@
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Location = new System.Drawing.Point(6, 71);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 100);
+            this.groupBox4.Size = new System.Drawing.Size(200, 126);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Fitness Evaluation";
@@ -433,7 +437,7 @@
             // useRandomSelectionCheckbox
             // 
             this.useRandomSelectionCheckbox.AutoSize = true;
-            this.useRandomSelectionCheckbox.Location = new System.Drawing.Point(15, 44);
+            this.useRandomSelectionCheckbox.Location = new System.Drawing.Point(15, 68);
             this.useRandomSelectionCheckbox.Name = "useRandomSelectionCheckbox";
             this.useRandomSelectionCheckbox.Size = new System.Drawing.Size(179, 17);
             this.useRandomSelectionCheckbox.TabIndex = 11;
@@ -452,7 +456,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 70);
+            this.label5.Location = new System.Drawing.Point(13, 94);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 5;
@@ -461,7 +465,7 @@
             // xstdTextBox
             // 
             this.xstdTextBox.Enabled = false;
-            this.xstdTextBox.Location = new System.Drawing.Point(53, 67);
+            this.xstdTextBox.Location = new System.Drawing.Point(53, 91);
             this.xstdTextBox.Name = "xstdTextBox";
             this.xstdTextBox.Size = new System.Drawing.Size(46, 20);
             this.xstdTextBox.TabIndex = 6;
@@ -470,7 +474,7 @@
             // ystdTextBox
             // 
             this.ystdTextBox.Enabled = false;
-            this.ystdTextBox.Location = new System.Drawing.Point(140, 67);
+            this.ystdTextBox.Location = new System.Drawing.Point(140, 91);
             this.ystdTextBox.Name = "ystdTextBox";
             this.ystdTextBox.Size = new System.Drawing.Size(46, 20);
             this.ystdTextBox.TabIndex = 8;
@@ -479,7 +483,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 70);
+            this.label4.Location = new System.Drawing.Point(105, 94);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 7;
@@ -518,6 +522,23 @@
             this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "Generation Size: ";
+            // 
+            // gammaTextBox
+            // 
+            this.gammaTextBox.Location = new System.Drawing.Point(53, 45);
+            this.gammaTextBox.Name = "gammaTextBox";
+            this.gammaTextBox.Size = new System.Drawing.Size(46, 20);
+            this.gammaTextBox.TabIndex = 13;
+            this.gammaTextBox.Text = "100.0";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "Gamma";
             // 
             // MainForm
             // 
@@ -591,6 +612,8 @@
         private System.Windows.Forms.TextBox gridSizeTextBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button runGaButton;
+        private System.Windows.Forms.TextBox gammaTextBox;
+        private System.Windows.Forms.Label label15;
     }
 }
 
