@@ -64,7 +64,7 @@ namespace PCBGeneticAlgorithm
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (layout[x, y] != 0)
+                    if (layout[x, y] > 0)
                     {
                         int index = (layout[x, y] >> 2) - 1;//Zero based index
                         if (layout.ModuleLocations[index] == null)
@@ -264,7 +264,7 @@ namespace PCBGeneticAlgorithm
             List<Triad> triads = angulator.Triangulation(points, true);
 
             //Convert to Graph
-            List<int> nodes = new List<int>(net.Connections.Length / 2);
+            SortedSet<int> nodes = new SortedSet<int>();
             for (int i = 0; i < net.Connections.Length / 2; i++)
             {
                 nodes.Add(i);//corresponds to points[index].
@@ -282,7 +282,7 @@ namespace PCBGeneticAlgorithm
                 adjMatrix[tri.c, tri.b] = adjMatrix[tri.b, tri.c];
             }
 
-            List<Edge> EMST = FindEMST(points, nodes, adjMatrix);
+            SortedSet<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
 
             double total = 0.0;
             foreach (Edge edge in EMST)
@@ -293,10 +293,10 @@ namespace PCBGeneticAlgorithm
             return total;
         }
 
-        private static List<Edge> FindEMST(List<Vertex> points, List<int> nodes, double[,] adjMatrix)
+        private static SortedSet<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
         {
-            List<Edge> openSet = new List<Edge>();
-            List<Edge> EMST = new List<Edge>();
+            SortedSet<Edge> openSet = new SortedSet<Edge>();
+            SortedSet<Edge> EMST = new SortedSet<Edge>();
 
             int currentVertex = 0;
             while (nodes.Count > 0)
@@ -304,23 +304,20 @@ namespace PCBGeneticAlgorithm
                 nodes.Remove(currentVertex);
 
                 //Add any edges to open set
-                for (int i = 0; i < points.Count; i++)
+                for (int i = 0; i < points; i++)
                 {
                     if (adjMatrix[currentVertex, i] > 0)
                     {
-
                         Edge edge = new Edge(currentVertex, i, adjMatrix[currentVertex, i]);
                         //TODO Optimize
-                        if(!openSet.Contains(edge) && !EMST.Contains(edge))
-                            openSet.Add(edge);
+                        if(nodes.Contains(i))
+                            openSet.Add(edge);//Other end of node is not explored already
                     }
-                    
                 }
 
-                openSet.Sort();
                 //Remove edge from empty set, and add to EMST
-                Edge nextEdge = openSet[0];
-                openSet.RemoveAt(0);
+                Edge nextEdge = openSet.Min;
+                openSet.Remove(nextEdge);
                 EMST.Add(nextEdge);
 
                 if (nodes.Contains(nextEdge.U))
