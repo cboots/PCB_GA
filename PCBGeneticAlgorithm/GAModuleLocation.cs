@@ -5,17 +5,23 @@ using System.Text;
 
 namespace PCBGeneticAlgorithm
 {
-    public class GAModuleLocation
+    public struct GAModuleLocation
     {
-        private int moduleID;
-        public int ModuleID { get { return moduleID; } }
-        public int Rotation { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        int mModuleID;
+        public int ModuleID { get { return mModuleID; } }
+        int mRotation;
+        public int Rotation { get { return mRotation; } }
+        int mX;
+        public int X { get { return mX; } }
+        int mY;
+        public int Y { get { return mY; } }
 
-        public GAModuleLocation(int modID)
+        public GAModuleLocation(int modID, int rotation, int x, int y)
         {
-            moduleID = modID;
+            mModuleID = modID;
+            mRotation = rotation;
+            mX = x;
+            mY = y;
         }
     }
 }

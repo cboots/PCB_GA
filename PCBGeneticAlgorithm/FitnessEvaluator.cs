@@ -14,10 +14,9 @@ namespace PCBGeneticAlgorithm
         {
             foreach (GALayout layout in generation)
             {
-                LocateModules(ga, layout);
-                AssessRawAreaFitness(ga, layout);
-                AssessRawNetFitness(ga, layout);
-                AssessRawConstraintViolations(ga, layout);
+                layout.RawAreaFitness = AssessRawAreaFitness(ga, layout.ModuleLocations);
+                layout.RawNetFitness = AssessRawNetFitness(ga, layout.ModuleLocations);
+                layout.RawConstraintViolations = AssessRawConstraintViolations(ga, layout.ModuleLocations);
             }
 
             CalculateNormalizedF1(generation);
@@ -30,10 +29,10 @@ namespace PCBGeneticAlgorithm
             }
         }
 
-        private static void AssessRawConstraintViolations(GeneticAlgorithm ga, GALayout layout)
+        private static int AssessRawConstraintViolations(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
         {
             //TODO Implement
-            layout.RawConstraintViolations = 0;
+            return 0;
         }
 
         private static void CalculateF3(GALayout[] generation)
@@ -45,19 +44,15 @@ namespace PCBGeneticAlgorithm
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>This method is very slow, and has been replaced by maintaining the 
+        /// ModuleLocations array with each move of a module. </remarks>
+        /// <param name="ga"></param>
+        /// <param name="layout"></param>
         public static void LocateModules(GeneticAlgorithm ga, GALayout layout)
         {
-            if (layout.ModuleLocations == null || layout.ModuleLocations.Length != ga.Modules.Length)
-            {
-                layout.ModuleLocations = new GAModuleLocation[ga.Modules.Length];//Initialize module lengths
-            }
-
-            for (int i = 0; i < layout.ModuleLocations.Length; i++)
-            {
-                //Clear array
-                layout.ModuleLocations[i] = null;
-            }
-
             int width = layout.Width;
             int height = layout.Height;
             for (int y = 0; y < height; y++)
@@ -67,14 +62,9 @@ namespace PCBGeneticAlgorithm
                     if (layout[x, y] > 0)
                     {
                         int index = (layout[x, y] >> 2) - 1;//Zero based index
-                        if (layout.ModuleLocations[index] == null)
-                        {
-                            layout.ModuleLocations[index] = new GAModuleLocation(index + 1);
-                            layout.ModuleLocations[index].X = x;
-                            layout.ModuleLocations[index].Y = y;
-                            layout.ModuleLocations[index].Rotation = layout[x, y] & 0x03;
+                        layout.ModuleLocations[index] = new GAModuleLocation(index + 1, x, y, layout[x, y] & 0x03);
 
-                        }
+                       
                         //Skip rotated module width
                         int mWidth = ga.Modules[index].getRotatedWidth(layout.ModuleLocations[index].Rotation);
                         x = x + mWidth - 1;
@@ -84,19 +74,19 @@ namespace PCBGeneticAlgorithm
             }
         }
 
-        public static void AssessRawAreaFitness(GeneticAlgorithm ga, GALayout layout)
+        public static double AssessRawAreaFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
         {
             int minX = Int32.MaxValue;
             int minY = Int32.MaxValue;
             int maxX = Int32.MinValue;
             int maxY = Int32.MinValue;
 
-            for (int i = 0; i < layout.ModuleLocations.Length; i++)
+            for (int i = 0; i < moduleLocations.Length; i++)
             {
-                int left = layout.ModuleLocations[i].X;
-                int top = layout.ModuleLocations[i].Y;
-                int right = left + ga.Modules[i].getRotatedWidth(layout.ModuleLocations[i].Rotation);
-                int bottom = top + ga.Modules[i].getRotatedHeight(layout.ModuleLocations[i].Rotation);
+                int left = moduleLocations[i].X;
+                int top = moduleLocations[i].Y;
+                int right = left + ga.Modules[i].getRotatedWidth(moduleLocations[i].Rotation);
+                int bottom = top + ga.Modules[i].getRotatedHeight(moduleLocations[i].Rotation);
 
                 if (left < minX)
                     minX = left;
@@ -108,10 +98,10 @@ namespace PCBGeneticAlgorithm
                     maxY = bottom;
             }
 
-            layout.RawAreaFitness = (maxX - minX) * (maxY - minY);
+            return (maxX - minX) * (maxY - minY);
         }
 
-        public static void AssessRawNetFitness(GeneticAlgorithm ga, GALayout layout)
+        public static double AssessRawNetFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
         {
             double total = 0.0;
             for (int i = 0; i < ga.Nets.Length; i++)
@@ -124,22 +114,22 @@ namespace PCBGeneticAlgorithm
                         break;
                     case 2:
                         //Special case, only one edge to assess
-                        netLength = CalculateNetLength2(ga, net, layout.ModuleLocations);
+                        netLength = CalculateNetLength2(ga, net, moduleLocations);
                         break;
                     case 3:
                         //Special case, find shortest two nets
-                        netLength = CalculateNetLength3(ga, net, layout.ModuleLocations);
+                        netLength = CalculateNetLength3(ga, net, moduleLocations);
                         break;
                     default:
                         //use euclidian min-spanning tree approach
-                        netLength = CalculateNetLengthEuclidean(ga, net, layout.ModuleLocations);
+                        netLength = CalculateNetLengthEuclidean(ga, net, moduleLocations);
                         break;
 
                 }
                 total += netLength;
             }
 
-            layout.RawNetFitness = total;
+            return total;
 
         }
 
@@ -293,6 +283,7 @@ namespace PCBGeneticAlgorithm
             return total;
         }
 
+        //TODO Optimize.  Currently a hot path.
         private static SortedSet<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
         {
             SortedSet<Edge> openSet = new SortedSet<Edge>();

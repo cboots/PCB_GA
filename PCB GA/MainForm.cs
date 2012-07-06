@@ -145,7 +145,7 @@ namespace PCB_Layout_GA
             GARunForm runForm = new GARunForm();
             runForm.GA = ga;
 
-            GALayout layout = ga.GenerateRandomLayout();
+            GALayout layout = GALayout.GenerateRandomLayout(ga);
             using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testData.txt"))
             {
                 print2DArray(layout.Layout, writer);
@@ -156,7 +156,7 @@ namespace PCB_Layout_GA
             GALayout[] testGen = new GALayout[ga.GenerationSize];
             for (i = 0; i < ga.GenerationSize; i++)
             {
-                testGen[i] = ga.GenerateRandomLayout();
+                testGen[i] = GALayout.GenerateRandomLayout(ga);
             }
 
             watch.Stop();
