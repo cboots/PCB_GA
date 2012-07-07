@@ -7,39 +7,21 @@ namespace PCBGeneticAlgorithm
 {
     public class GALayout
     {
-        private ushort[,] mLayout;
-
-        public ushort[,] Layout { get { return mLayout; } }
-
-        public ushort this[int x, int y]
-        {
-            get
-            {
-                return mLayout[x, y];
-            }
-            set
-            {
-                mLayout[x, y] = value;
-            }
-        }
-
+        private int mWidth = 0;
         public int Width
         {
             get
             {
-                if (mLayout != null)
-                    return mLayout.GetLength(0);
-                return 0;
+                return mWidth;
             }
         }
 
+        private int mHeight = 0;
         public int Height
         {
             get
             {
-                if (mLayout != null)
-                    return mLayout.GetLength(1);
-                return 0;
+                return mHeight;
             }
         }
 
@@ -64,7 +46,8 @@ namespace PCBGeneticAlgorithm
 
         public GALayout(GeneticAlgorithm ga)
         {
-            mLayout = new ushort[ga.WorkspaceWidth, ga.WorkspaceHeight];
+            mWidth = ga.WorkspaceWidth;
+            mHeight = ga.WorkspaceHeight;
             moduleLocations = new GAModuleLocation[ga.Modules.Length];
         }
 
@@ -73,9 +56,7 @@ namespace PCBGeneticAlgorithm
         {
             GALayout layout = new GALayout(ga);
 
-            //Reverse order.  Larger chips tend to have U* designations
-            //More efficient
-            for (int i = ga.Modules.Length-1; i >= 0; i-- )
+            for (int i = 0; i < ga.Modules.Length; i++)
             {
                 bool placed = RandomlyPlaceModule(ga, layout, i);
                 if (!placed)
@@ -98,33 +79,26 @@ namespace PCBGeneticAlgorithm
                 int rot = ga.rand.Next(4);//Rotation (0-3)
 
                 //Get rotated module dims
-                int mWidth = ((rot % 2) == 0) ? mod.Width : mod.Height;
-                int mHeight = ((rot % 2) == 0) ? mod.Height : mod.Width;
+                int mWidth = mod.getRotatedWidth(rot);
+                int mHeight = mod.getRotatedHeight(rot);
 
                 //Find upper left corner position, ignoring invalid right and lower regions
                 int x = ga.rand.Next(width - mWidth);
                 int y = ga.rand.Next(height - mHeight);
 
                 bool fits = true;
-                for (int m = x; m < x + mWidth; m++)
+                for (int m = 0; m < moduleIndex; m++)
                 {
-                    if (!fits)
-                        break;
-
-                    for (int n = y; n < y + mHeight; n++)
+                    if (layout.ModuleLocations[m].IntersectsRect(x, y, mWidth, mHeight))
                     {
-                        if (layout[m, n] != 0)
-                        {
-                            fits = false;
-                            break;
-                        }
+                        fits = false;
+                        break;
                     }
                 }
                 if (fits)
                 {
                     //Place module
                     PlaceModule(layout, moduleIndex, rot, mWidth, mHeight, x, y);
-                    //Console.WriteLine("Tries for " + Modules[moduleIndex].ComponentReference + "=" + tries);
                     return true;
                 }
 
@@ -132,43 +106,62 @@ namespace PCBGeneticAlgorithm
             return false;
         }
 
-        private static void PlaceModule(GALayout layout, int moduleIndex, int rotation, int mWidth, int mHeight, int x, int y)
+        private static void PlaceModule(GALayout layout, int moduleIndex, int rotation, int rotatedWidth, int rotatedHeight, int x, int y)
         {
-            ushort moduleID = (ushort)((moduleIndex + 1) << 2);
-            layout.ModuleLocations[moduleIndex] = new GAModuleLocation(moduleIndex + 1, rotation, x, y);
+            layout.ModuleLocations[moduleIndex] = new GAModuleLocation(rotation, x, y, rotatedWidth, rotatedHeight);
+        }
 
-            for (int m = x; m < x + mWidth; m++)
+        /// <summary>
+        /// Generates an array representation of the layout.  Not efficient, used for quick debugging.
+        /// </summary>
+        /// <returns></returns>
+        public ushort[,] GenerateArray()
+        {
+            ushort[,] layout = new ushort[Width, Height];
+            for (int i = 0; i < moduleLocations.Length; i++ )
             {
-                for (int n = y; n < y + mHeight; n++)
-                {
-                    if (m == x && n == y)
-                    {
-                        //Upper left corner (0)
-                        layout[m, n] = (ushort)(moduleID | ((0 + rotation) % 4));
 
-                    }
-                    else if (m == x + mWidth - 1 && n == y)
+                ushort moduleID = (ushort)((i + 1) << 2);
+                int x = moduleLocations[i].X;
+                int y = moduleLocations[i].Y;
+                int width = moduleLocations[i].Width;
+                int height = moduleLocations[i].Height;
+                int rotation = moduleLocations[i].Rotation;
+
+                for (int m = x; m < x + width; m++)
+                {
+                    for (int n = y; n < y + height; n++)
                     {
-                        //Upper right corner (1)
-                        layout[m, n] = (ushort)(moduleID | ((1 + rotation) % 4));
-                    }
-                    else if (m == x + mWidth - 1 && n == y + mHeight - 1)
-                    {
-                        //Lower right corner (2)
-                        layout[m, n] = (ushort)(moduleID | ((2 + rotation) % 4));
-                    }
-                    else if (m == x && n == y + mHeight - 1)
-                    {
-                        //Lower left corner (3)
-                        layout[m, n] = (ushort)(moduleID | ((3 + rotation) % 4));
-                    }
-                    else
-                    {
-                        //All others
-                        layout[m, n] = moduleID;
+                        if (m == x && n == y)
+                        {
+                            //Upper left corner (0)
+                            layout[m, n] = (ushort)(moduleID | ((0 + rotation) % 4));
+
+                        }
+                        else if (m == x + width - 1 && n == y)
+                        {
+                            //Upper right corner (1)
+                            layout[m, n] = (ushort)(moduleID | ((1 + rotation) % 4));
+                        }
+                        else if (m == x + width - 1 && n == y + height - 1)
+                        {
+                            //Lower right corner (2)
+                            layout[m, n] = (ushort)(moduleID | ((2 + rotation) % 4));
+                        }
+                        else if (m == x && n == y + height - 1)
+                        {
+                            //Lower left corner (3)
+                            layout[m, n] = (ushort)(moduleID | ((3 + rotation) % 4));
+                        }
+                        else
+                        {
+                            //All others
+                            layout[m, n] = moduleID;
+                        }
                     }
                 }
             }
+            return layout;
         }
 
     }

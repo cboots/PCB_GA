@@ -43,37 +43,6 @@ namespace PCBGeneticAlgorithm
             }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>This method is very slow, and has been replaced by maintaining the 
-        /// ModuleLocations array with each move of a module. </remarks>
-        /// <param name="ga"></param>
-        /// <param name="layout"></param>
-        public static void LocateModules(GeneticAlgorithm ga, GALayout layout)
-        {
-            int width = layout.Width;
-            int height = layout.Height;
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    if (layout[x, y] > 0)
-                    {
-                        int index = (layout[x, y] >> 2) - 1;//Zero based index
-                        layout.ModuleLocations[index] = new GAModuleLocation(index + 1, x, y, layout[x, y] & 0x03);
-
-                       
-                        //Skip rotated module width
-                        int mWidth = ga.Modules[index].getRotatedWidth(layout.ModuleLocations[index].Rotation);
-                        x = x + mWidth - 1;
-                            
-                    }
-                }
-            }
-        }
-
         public static double AssessRawAreaFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
         {
             int minX = Int32.MaxValue;
@@ -272,7 +241,7 @@ namespace PCBGeneticAlgorithm
                 adjMatrix[tri.c, tri.b] = adjMatrix[tri.b, tri.c];
             }
 
-            SortedSet<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
+            List<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
 
             double total = 0.0;
             foreach (Edge edge in EMST)
@@ -284,10 +253,10 @@ namespace PCBGeneticAlgorithm
         }
 
         //TODO Optimize.  Currently a hot path.
-        private static SortedSet<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
+        private static List<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
         {
             SortedSet<Edge> openSet = new SortedSet<Edge>();
-            SortedSet<Edge> EMST = new SortedSet<Edge>();
+            List<Edge> EMST = new List<Edge>();
 
             int currentVertex = 0;
             while (nodes.Count > 0)

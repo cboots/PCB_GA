@@ -148,7 +148,7 @@ namespace PCB_Layout_GA
             GALayout layout = GALayout.GenerateRandomLayout(ga);
             using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testData.txt"))
             {
-                print2DArray(layout.Layout, writer);
+                print2DArray(layout.GenerateArray(), writer);
             }
 
             Stopwatch watch = new Stopwatch();
