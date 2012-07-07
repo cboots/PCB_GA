@@ -120,57 +120,31 @@ namespace PCBGeneticAlgorithm
 
         private static void CalculateNormalizedF1(GALayout[] layouts)
         {
-            int n = 0;
-            double sum1 = 0;
-            double sum2 = 0;
+            double sum = 0;
 
             foreach (GALayout layout in layouts)
             {
-                n++;
-                sum1 += layout.RawAreaFitness;
+                sum += layout.RawAreaFitness;
             }
 
-            double mean = sum1 / n;
-
             foreach (GALayout layout in layouts)
             {
-                sum2 += (layout.RawAreaFitness - mean)*(layout.RawAreaFitness - mean);
-            }
-
-            double std = Math.Sqrt(sum2 / (n - 1));
-
-            foreach (GALayout layout in layouts)
-            {
-                //TODO improve normalization equation based on statistical analysis of data set
-                layout.F1 = (layout.RawAreaFitness - mean) / std;
+                layout.F1 = (layout.RawAreaFitness / sum);
             }
         }
 
         private static void CalculateNormalizedF2(GALayout[] layouts)
         {
-            int n = 0;
-            double sum1 = 0;
-            double sum2 = 0;
+            double sum = 0;
 
             foreach (GALayout layout in layouts)
             {
-                n++;
-                sum1 += layout.RawNetFitness;
+                sum += layout.RawNetFitness;
             }
 
-            double mean = sum1 / n;
-
             foreach (GALayout layout in layouts)
             {
-                sum2 += (layout.RawNetFitness - mean) * (layout.RawNetFitness - mean);
-            }
-
-            double std = Math.Sqrt(sum2 / (n - 1));
-
-            foreach (GALayout layout in layouts)
-            {
-                //TODO improve normalization equation based on statistical analysis of data set
-                layout.F2 = (layout.RawNetFitness - mean) / std;
+                layout.F2 = (layout.RawNetFitness / sum);
             }
         }
 
