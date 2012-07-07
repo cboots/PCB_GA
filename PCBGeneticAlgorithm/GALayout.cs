@@ -58,7 +58,7 @@ namespace PCBGeneticAlgorithm
 
             for (int i = 0; i < ga.Modules.Length; i++)
             {
-                bool placed = RandomlyPlaceModule(ga, layout, i);
+                bool placed = RandomlyPlaceModule(ga, layout, i, false);
                 if (!placed)
                 {
                     throw new Exception("Failed to place module. Could not find enough space for " + ga.Modules[i].ComponentReference);
@@ -67,7 +67,7 @@ namespace PCBGeneticAlgorithm
             return layout;
         }
 
-        private static bool RandomlyPlaceModule(GeneticAlgorithm ga, GALayout layout, int moduleIndex)
+        public static bool RandomlyPlaceModule(GeneticAlgorithm ga, GALayout layout, int moduleIndex, bool checkAllCollisions)
         {
             int width = ga.WorkspaceWidth;
             int height = ga.WorkspaceHeight;
@@ -87,12 +87,16 @@ namespace PCBGeneticAlgorithm
                 int y = ga.rand.Next(height - mHeight);
 
                 bool fits = true;
-                for (int m = 0; m < moduleIndex; m++)
+                int max = checkAllCollisions ? layout.ModuleLocations.Length : moduleIndex;
+                for (int m = 0; m < max; m++)
                 {
-                    if (layout.ModuleLocations[m].IntersectsRect(x, y, mWidth, mHeight))
+                    if (m != moduleIndex)
                     {
-                        fits = false;
-                        break;
+                        if (layout.ModuleLocations[m].Intersects(x, y, mWidth, mHeight))
+                        {
+                            fits = false;
+                            break;
+                        }
                     }
                 }
                 if (fits)
@@ -109,6 +113,20 @@ namespace PCBGeneticAlgorithm
         private static void PlaceModule(GALayout layout, int moduleIndex, int rotation, int rotatedWidth, int rotatedHeight, int x, int y)
         {
             layout.ModuleLocations[moduleIndex] = new GAModuleLocation(rotation, x, y, rotatedWidth, rotatedHeight);
+        }
+
+        public static bool CheckIfFits(GALayout layout, GAModuleLocation moduleLocation)
+        {
+            bool fits = true;
+            for (int m = 0; m < layout.ModuleLocations.Length; m++)
+            {
+                if (layout.ModuleLocations[m].Intersects(moduleLocation))
+                {
+                    fits = false;
+                    break;
+                }
+            }
+            return fits;
         }
 
         /// <summary>

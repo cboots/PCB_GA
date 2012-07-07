@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace PCBGeneticAlgorithm
 {
@@ -37,15 +38,25 @@ namespace PCBGeneticAlgorithm
 
         public bool Intersects(GAModuleLocation other)
         {
-            return IntersectsRect(other.X, other.Y, other.Width, other.Height);
+            return Intersects(other.X, other.Y, other.Width, other.Height);
         }
 
-        public bool IntersectsRect(int x, int y, int width, int height)
+        public bool Intersects(Rectangle rectangle)
+        {
+            return Intersects(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        public bool Intersects(int x, int y, int width, int height)
         {
             return !(((x+width) < mX) || //this right of other
                 ((mX + mWidth) < x) || //this left of other
                 ((y+height) < mY) ||  //this below other
                 ((mY + mHeight) < y)); //this above other
+        }
+
+        public override string ToString()
+        {
+            return "{x=" + mX + ",y=" + mY + ",rot=" + mRotation + ",w=" + mWidth + ",h=" + mHeight + "}";
         }
     }
 }

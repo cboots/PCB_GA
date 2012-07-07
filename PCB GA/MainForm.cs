@@ -145,10 +145,39 @@ namespace PCB_Layout_GA
             GARunForm runForm = new GARunForm();
             runForm.GA = ga;
 
-            GALayout layout = GALayout.GenerateRandomLayout(ga);
-            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testData.txt"))
+            GALayout parent1 = GALayout.GenerateRandomLayout(ga);
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\parent1.txt"))
             {
-                print2DArray(layout.GenerateArray(), writer);
+                print2DArray(parent1.GenerateArray(), writer);
+            }
+
+            GALayout parent2 = GALayout.GenerateRandomLayout(ga);
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\parent2.txt"))
+            {
+                print2DArray(parent2.GenerateArray(), writer);
+            }
+
+
+            GALayout child1, child2;
+            Rectangle region = Crossover.CrossOver(ga, parent1, parent2, out child1, out child2);
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\child1.txt"))
+            {
+                print2DArray(child1.GenerateArray(), writer);
+            }
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\child2.txt"))
+            {
+                print2DArray(child2.GenerateArray(), writer);
+            }
+
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\crossover.txt"))
+            {
+                writer.Write(region.X);
+                writer.Write(" ");
+                writer.Write(region.Y);
+                writer.Write(" ");
+                writer.Write(region.Width);
+                writer.Write(" ");
+                writer.Write(region.Height);
             }
 
             Stopwatch watch = new Stopwatch();
