@@ -32,6 +32,6 @@ namespace PCBGeneticAlgorithm
 
         public double CrossoverWidth { get; set; }
 
-        
+        public double CrossoverRate { get; set; }
     }
 }

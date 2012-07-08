@@ -151,7 +151,8 @@ namespace PCB_Layout_GA
                 print2DArray(parent1.GenerateArray(), writer);
             }
 
-            GALayout parent2 = GALayout.GenerateRandomLayout(ga);
+            Mutation.SwapMutaion(ga, parent1);
+            GALayout parent2 = parent1;
             using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\parent2.txt"))
             {
                 print2DArray(parent2.GenerateArray(), writer);
@@ -199,6 +200,24 @@ namespace PCB_Layout_GA
             using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\fitness.txt"))
             {
                 foreach (GALayout l in testGen)
+                {
+                    printFitness(writer, l);
+                }
+            }
+
+            watch.Restart();
+            GALayout[] nextGen = Selection.GenerateNextGeneration(ga, testGen);
+            watch.Stop();
+            Console.WriteLine("Next Gen Creation: " + watch.ElapsedMilliseconds + "ms");
+
+            watch.Restart();
+            FitnessEvaluator.EvaluateGenerationFitness(ga, nextGen);
+            watch.Stop();
+            Console.WriteLine("FitnessEval: " + watch.ElapsedMilliseconds + "ms");
+
+            using (StreamWriter writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\fitness1.txt"))
+            {
+                foreach (GALayout l in nextGen)
                 {
                     printFitness(writer, l);
                 }
@@ -320,6 +339,7 @@ namespace PCB_Layout_GA
             ga.CrossoverWidth = Double.Parse(crossoverWidthTextbox.Text);
             ga.GenerationSize = Int32.Parse(genSizeTextBox.Text);
             ga.MaxGeneration = Int32.Parse(maxGenTextBox.Text);
+            ga.CrossoverRate = Double.Parse(crossoverRateTB.Text);
             ga.MutationRateRotation = Double.Parse(rotationRateTextbox.Text);
             ga.MutationRateSwap = Double.Parse(swapRateTextbox.Text);
             ga.MutationRateTranspose = Double.Parse(transposeRateTextbox.Text);

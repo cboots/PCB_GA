@@ -59,6 +59,8 @@
             this.rotationRateTextbox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.gammaTextBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.alphaTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -72,8 +74,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.genSizeTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.gammaTextBox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.crossoverRateTB = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -296,11 +298,13 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.crossoverRateTB);
+            this.groupBox6.Controls.Add(this.label16);
             this.groupBox6.Controls.Add(this.crossoverWidthTextbox);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Location = new System.Drawing.Point(349, 71);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(99, 37);
+            this.groupBox6.Size = new System.Drawing.Size(99, 71);
             this.groupBox6.TabIndex = 16;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Crossover";
@@ -407,6 +411,23 @@
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Fitness Evaluation";
+            // 
+            // gammaTextBox
+            // 
+            this.gammaTextBox.Location = new System.Drawing.Point(53, 45);
+            this.gammaTextBox.Name = "gammaTextBox";
+            this.gammaTextBox.Size = new System.Drawing.Size(46, 20);
+            this.gammaTextBox.TabIndex = 13;
+            this.gammaTextBox.Text = "100.0";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "Gamma";
             // 
             // alphaTextBox
             // 
@@ -523,22 +544,22 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Generation Size: ";
             // 
-            // gammaTextBox
+            // crossoverRateTB
             // 
-            this.gammaTextBox.Location = new System.Drawing.Point(53, 45);
-            this.gammaTextBox.Name = "gammaTextBox";
-            this.gammaTextBox.Size = new System.Drawing.Size(46, 20);
-            this.gammaTextBox.TabIndex = 13;
-            this.gammaTextBox.Text = "100.0";
+            this.crossoverRateTB.Location = new System.Drawing.Point(43, 45);
+            this.crossoverRateTB.Name = "crossoverRateTB";
+            this.crossoverRateTB.Size = new System.Drawing.Size(46, 20);
+            this.crossoverRateTB.TabIndex = 10;
+            this.crossoverRateTB.Text = "0.80";
             // 
-            // label15
+            // label16
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 48);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(43, 13);
-            this.label15.TabIndex = 12;
-            this.label15.Text = "Gamma";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(30, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Rate";
             // 
             // MainForm
             // 
@@ -614,6 +635,8 @@
         private System.Windows.Forms.Button runGaButton;
         private System.Windows.Forms.TextBox gammaTextBox;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox crossoverRateTB;
+        private System.Windows.Forms.Label label16;
     }
 }
 

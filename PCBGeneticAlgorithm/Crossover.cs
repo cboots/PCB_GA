@@ -98,5 +98,33 @@ namespace PCBGeneticAlgorithm
             return new Rectangle(xmin, ymin, rWidth, rHeight);
         }
 
+
+        internal static void CrossOver(GeneticAlgorithm ga, GALayout[] selected)
+        {
+            GALayout parent1;
+            GALayout parent2;
+
+            GALayout child1;
+            GALayout child2;
+
+            for (int i = 0; i < selected.Length; i++)
+            {
+                double x = sRand.NextDouble();
+                if (x < ga.CrossoverRate)
+                {
+                    parent1 = selected[i];
+                    int index2 = i;
+                    while(index2 == i)
+                    {
+                        index2 = sRand.Next(0, selected.Length);
+                    }
+                    parent2 = selected[index2];
+                    CrossOver(ga, parent1, parent2, out child1, out child2);
+                    selected[i] = child1;
+                    selected[index2] = child2;
+                }
+            }
+
+        }
     }
 }
