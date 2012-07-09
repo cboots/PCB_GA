@@ -229,9 +229,11 @@ namespace PCBGeneticAlgorithm
         //TODO Optimize.  Currently a hot path.
         private static List<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
         {
+            //For debugging crashes
+            //SortedSet<int> nodesCopy = new SortedSet<int>(nodes);
             SortedSet<Edge> openSet = new SortedSet<Edge>();
             List<Edge> EMST = new List<Edge>();
-
+            //nodes = new SortedSet<int>(nodesCopy);
             int currentVertex = 0;
             while (nodes.Count > 0)
             {
@@ -249,17 +251,34 @@ namespace PCBGeneticAlgorithm
                     }
                 }
 
-                //Remove edge from empty set, and add to EMST
-                Edge nextEdge = openSet.Min;
-                openSet.Remove(nextEdge);
-                EMST.Add(nextEdge);
-
-                if (nodes.Contains(nextEdge.U))
+                //If more nodes to go, get next edge.
+                if (nodes.Count > 0)
                 {
-                    //V is in EMST already, add U next loop
-                    currentVertex = nextEdge.U;}
-                else{
-                    currentVertex = nextEdge.V;
+                    //Remove edge from empty set, and add to EMST
+                    Edge nextEdge = openSet.Min;
+                    openSet.Remove(nextEdge);
+                    if (!nodes.Contains(nextEdge.V))
+                    {
+                        foreach (Edge edge in openSet)
+                        {
+                            if (nodes.Contains(edge.V))
+                            {
+                                nextEdge = edge;
+                                break;
+                            }
+                        }
+                    }
+                    EMST.Add(nextEdge);
+
+                    if (nodes.Contains(nextEdge.U))
+                    {
+                        //V is in EMST already, add U next loop
+                        currentVertex = nextEdge.U;
+                    }
+                    else
+                    {
+                        currentVertex = nextEdge.V;
+                    }
                 }
             }
             return EMST;
@@ -289,7 +308,14 @@ namespace PCBGeneticAlgorithm
 
                 Edge other = obj as Edge;
                 if (other != null)
-                    return this.Length.CompareTo(other.Length);
+                {
+                    if (other.Length == mLength)
+                    {
+                        //Cannot say they are equal
+                        return 1;
+                    }
+                    return this.mLength.CompareTo(other.Length);
+                }
                 else
                     throw new ArgumentException("Object is not an Edge");
             }
@@ -310,6 +336,11 @@ namespace PCBGeneticAlgorithm
             public override int GetHashCode()
             {
                 return U ^ V ^ (int)Length;
+            }
+
+            public override string ToString()
+            {
+                return "Edge {" + mU + "," + mV + "," + mLength + "}";
             }
         }
     }
