@@ -145,6 +145,9 @@ namespace PCB_Layout_GA
             GARunForm runForm = new GARunForm();
             runForm.GA = ga;
 
+            //For Profiling only
+            //runForm.RunNormalGA();
+
             DialogResult result = runForm.ShowDialog();
 
         }

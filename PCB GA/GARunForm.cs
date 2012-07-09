@@ -28,6 +28,11 @@ namespace PCB_Layout_GA
 
         private void gaBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            RunNormalGA();
+        }
+
+        public void RunNormalGA()
+        {
             //Setup first generation
             GALayout[] generation = new GALayout[GA.GenerationSize];
 
@@ -84,15 +89,15 @@ namespace PCB_Layout_GA
             {
                 double minFitness = Double.MaxValue;
                 GALayout best = null;
-                for(int i = 0; i < generation.Length; i++)
+                for (int i = 0; i < generation.Length; i++)
                 {
-                    if(generation[i].Fitness < minFitness)
+                    if (generation[i].Fitness < minFitness)
                     {
                         best = generation[i];
                     }
                 }
                 print2DArray(best.GenerateArray(), solutionWriter);
- 
+
             }
             logProgress("Run finished");
         }

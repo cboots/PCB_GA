@@ -49,6 +49,8 @@
             this.workspaceSizeTextbox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.crossoverRateTB = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.crossoverWidthTextbox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -74,8 +76,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.genSizeTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.crossoverRateTB = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -309,13 +309,30 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Crossover";
             // 
+            // crossoverRateTB
+            // 
+            this.crossoverRateTB.Location = new System.Drawing.Point(43, 45);
+            this.crossoverRateTB.Name = "crossoverRateTB";
+            this.crossoverRateTB.Size = new System.Drawing.Size(46, 20);
+            this.crossoverRateTB.TabIndex = 10;
+            this.crossoverRateTB.Text = "0.90";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(30, 13);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "Rate";
+            // 
             // crossoverWidthTextbox
             // 
             this.crossoverWidthTextbox.Location = new System.Drawing.Point(43, 13);
             this.crossoverWidthTextbox.Name = "crossoverWidthTextbox";
             this.crossoverWidthTextbox.Size = new System.Drawing.Size(46, 20);
             this.crossoverWidthTextbox.TabIndex = 8;
-            this.crossoverWidthTextbox.Text = "2";
+            this.crossoverWidthTextbox.Text = "0.5";
             // 
             // label11
             // 
@@ -543,23 +560,6 @@
             this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "Generation Size: ";
-            // 
-            // crossoverRateTB
-            // 
-            this.crossoverRateTB.Location = new System.Drawing.Point(43, 45);
-            this.crossoverRateTB.Name = "crossoverRateTB";
-            this.crossoverRateTB.Size = new System.Drawing.Size(46, 20);
-            this.crossoverRateTB.TabIndex = 10;
-            this.crossoverRateTB.Text = "0.80";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 48);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(30, 13);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "Rate";
             // 
             // MainForm
             // 
