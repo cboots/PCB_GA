@@ -147,6 +147,19 @@ namespace PCB_Layout_GA
 
             //For Profiling only
             //runForm.RunNormalGA();
+            GALayout testLayout = GALayout.GenerateRandomLayout(ga);
+
+            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testLayout1.text"))
+            {
+                print2DArray(testLayout.GenerateArray(), solutionWriter);
+            }
+
+            testLayout.ModuleLocations = Compaction.Compact(testLayout.ModuleLocations);
+
+            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testLayout2.text"))
+            {   
+                print2DArray(testLayout.GenerateArray(), solutionWriter);
+            }
 
             DialogResult result = runForm.ShowDialog();
 

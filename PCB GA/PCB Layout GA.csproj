@@ -110,6 +110,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DelaunayTriangulation\DelaunayTriangulation.csproj">
+      <Project>{04396B7E-4566-4920-AC03-D5360604DF33}</Project>
+      <Name>DelaunayTriangulation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PCBGeneticAlgorithm\PCBGeneticAlgorithm.csproj">
       <Project>{AAECCE2A-92A1-4AE6-83F7-DD8708A2A1DB}</Project>
       <Name>PCBGeneticAlgorithm</Name>

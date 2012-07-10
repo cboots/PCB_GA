@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compaction.cs" />
     <Compile Include="Crossover.cs" />
     <Compile Include="FitnessEvaluator.cs" />
     <Compile Include="GALayout.cs" />

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using PCBGeneticAlgorithm;
 using System.IO;
+using DelaunayTriangulator;
 
 namespace PCB_Layout_GA
 {
@@ -85,22 +86,164 @@ namespace PCB_Layout_GA
                     }
                 }
             }
+            FitnessEvaluator.EvaluateGenerationFitness(GA, generation);
+
             using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\Solution.text"))
             {
-                double minFitness = Double.MaxValue;
-                GALayout best = null;
-                for (int i = 0; i < generation.Length; i++)
+                using (System.IO.StreamWriter connectionswriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\SolutionNets.text"))
                 {
-                    if (generation[i].Fitness < minFitness)
+                    double minFitness = Double.MaxValue;
+                    GALayout best = null;
+                    for (int i = 0; i < generation.Length; i++)
                     {
-                        best = generation[i];
+                        if (generation[i].Fitness < minFitness)
+                        {
+                            best = generation[i];
+                        }
                     }
-                }
-                print2DArray(best.GenerateArray(), solutionWriter);
+                    //Compact solution
+                    best.ModuleLocations = Compaction.Compact(best.ModuleLocations);
 
+
+                    print2DArray(best.GenerateArray(), solutionWriter);
+
+                    //print Connections
+                    printConnections(best, connectionswriter);
+                }
             }
             logProgress("Run finished");
         }
+
+        public void printConnections(GALayout best, StreamWriter connectionsWriter)
+        {
+            List<Connection> connections = new List<Connection>();
+
+            foreach (GANet net in GA.Nets)
+            {
+                List<Vertex> points = FitnessEvaluator.GetPinLocations(GA, net, best.ModuleLocations);
+                switch (points.Count)
+                {
+                    case 1://Error
+                        break;
+                    case 2:
+                        connections.Add(new Connection(points[0], points[1]));
+                        break;
+                    case 3:
+                        //Special case, find shortest two nets
+                        AddShortestConnections3(connections, points);
+
+                        break;
+                    default:
+                        //use euclidian min-spanning tree approach
+                        GenerateEMSTEdges(connections, net, points);
+                        break;
+                }
+            }
+
+            foreach (Connection con in connections)
+            {
+                connectionsWriter.Write(con.P1.x);
+                connectionsWriter.Write(' ');
+                connectionsWriter.Write(con.P1.y);
+                connectionsWriter.Write(' ');
+                connectionsWriter.Write(con.P2.x);
+                connectionsWriter.Write(' ');
+                connectionsWriter.Write(con.P2.y);
+                connectionsWriter.Write(' ');
+                connectionsWriter.WriteLine();
+            }
+        }
+
+        private static void GenerateEMSTEdges(List<Connection> connections, GANet net, List<Vertex> points)
+        {
+            Triangulator angulator = new Triangulator();
+            try
+            {
+                List<Triad> triads = angulator.Triangulation(points, true);
+
+                //Convert to Graph
+                SortedSet<int> nodes = new SortedSet<int>();
+                for (int i = 0; i < net.Connections.Length / 2; i++)
+                {
+                    nodes.Add(i);//corresponds to points[index].
+                }
+
+                //Create symetric adjacency matrix
+                double[,] adjMatrix = new double[nodes.Count, nodes.Count];
+                foreach (Triad tri in triads)
+                {
+                    adjMatrix[tri.a, tri.b] = points[tri.a].distanceTo(points[tri.b]);
+                    adjMatrix[tri.b, tri.a] = adjMatrix[tri.a, tri.b];
+                    adjMatrix[tri.a, tri.c] = points[tri.a].distanceTo(points[tri.c]);
+                    adjMatrix[tri.c, tri.a] = adjMatrix[tri.a, tri.c];
+                    adjMatrix[tri.b, tri.c] = points[tri.b].distanceTo(points[tri.c]);
+                    adjMatrix[tri.c, tri.b] = adjMatrix[tri.b, tri.c];
+                }
+
+                List<FitnessEvaluator.Edge> EMST = FitnessEvaluator.FindEMST(points.Count, nodes, adjMatrix);
+
+                foreach (FitnessEvaluator.Edge edge in EMST)
+                {
+                    connections.Add(new Connection(points[edge.U], points[edge.V]));
+                }
+
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private static void AddShortestConnections3(List<Connection> connections, List<Vertex> points)
+        {
+            double len0 = points[0].distanceTo(points[1]);
+            double len1 = points[1].distanceTo(points[2]);
+            double len2 = points[2].distanceTo(points[0]);
+
+            if (len0 > len1)
+            {
+                if (len2 > len0)
+                {
+                    //Len2 max
+                    connections.Add(new Connection(points[0], points[1]));
+                    connections.Add(new Connection(points[1], points[2]));
+                }
+                else
+                {
+                    //Len0 max
+                    connections.Add(new Connection(points[2], points[0]));
+                    connections.Add(new Connection(points[1], points[2]));
+                }
+            }
+            else
+            {
+                if (len2 > len1)
+                {
+                    //Len2 max
+                    connections.Add(new Connection(points[0], points[1]));
+                    connections.Add(new Connection(points[1], points[2]));
+                }
+                else
+                {
+                    //Len1 max
+                    connections.Add(new Connection(points[0], points[1]));
+                    connections.Add(new Connection(points[2], points[0]));
+                }
+            }
+        }
+
+        private class Connection
+        {
+            public Vertex P1 {get;set;}
+            public Vertex P2 {get;set;}
+
+            public Connection(Vertex p1, Vertex p2)
+            {
+                P1 = p1;
+                P2 = p2;
+            }
+
+        }
+
 
         public static void print2DArray(ushort[,] array, StreamWriter writer)
         {

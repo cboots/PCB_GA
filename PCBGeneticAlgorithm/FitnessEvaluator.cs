@@ -14,9 +14,10 @@ namespace PCBGeneticAlgorithm
         {
             foreach (GALayout layout in generation)
             {
-                layout.RawAreaFitness = AssessRawAreaFitness(ga, layout.ModuleLocations);
-                layout.RawNetFitness = AssessRawNetFitness(ga, layout.ModuleLocations);
-                layout.RawConstraintViolations = AssessRawConstraintViolations(ga, layout.ModuleLocations);
+                GAModuleLocation[] compacted = Compaction.Compact(layout.ModuleLocations);
+                layout.RawAreaFitness = AssessRawAreaFitness(ga, compacted);
+                layout.RawNetFitness = AssessRawNetFitness(ga, compacted);
+                layout.RawConstraintViolations = AssessRawConstraintViolations(ga, compacted);
             }
 
             CalculateNormalizedF1(generation);
@@ -102,7 +103,7 @@ namespace PCBGeneticAlgorithm
 
         }
 
-        private static List<Vertex> GetPinLocations(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        public static List<Vertex> GetPinLocations(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
         {
             List<Vertex> points = new List<Vertex>(net.Connections.Length / 2);
             for (int i = 0; i < net.Connections.Length/2; i++)
@@ -192,42 +193,90 @@ namespace PCBGeneticAlgorithm
         {
             List<Vertex> points = GetPinLocations(ga, net, locations);
 
+            //Perform edge case check
+            if (Colinear(points))
+            {
+                return CalculateNetLengthLinear(points);
+            }
+
             //Compute Delaunay Triangulation
             Triangulator angulator = new Triangulator();
-            List<Triad> triads = angulator.Triangulation(points, true);
-
-            //Convert to Graph
-            SortedSet<int> nodes = new SortedSet<int>();
-            for (int i = 0; i < net.Connections.Length / 2; i++)
+            try
             {
-                nodes.Add(i);//corresponds to points[index].
+                List<Triad> triads = angulator.Triangulation(points, true);
+
+                //Convert to Graph
+                SortedSet<int> nodes = new SortedSet<int>();
+                for (int i = 0; i < net.Connections.Length / 2; i++)
+                {
+                    nodes.Add(i);//corresponds to points[index].
+                }
+
+                //Create symetric adjacency matrix
+                double[,] adjMatrix = new double[nodes.Count, nodes.Count];
+                foreach (Triad tri in triads)
+                {
+                    adjMatrix[tri.a, tri.b] = points[tri.a].distanceTo(points[tri.b]);
+                    adjMatrix[tri.b, tri.a] = adjMatrix[tri.a, tri.b];
+                    adjMatrix[tri.a, tri.c] = points[tri.a].distanceTo(points[tri.c]);
+                    adjMatrix[tri.c, tri.a] = adjMatrix[tri.a, tri.c];
+                    adjMatrix[tri.b, tri.c] = points[tri.b].distanceTo(points[tri.c]);
+                    adjMatrix[tri.c, tri.b] = adjMatrix[tri.b, tri.c];
+                }
+
+                List<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
+
+                double total = 0.0;
+                foreach (Edge edge in EMST)
+                {
+                    total += edge.Length;
+                }
+
+                return total;
             }
-            
-            //Create symetric adjacency matrix
-            double[,] adjMatrix = new double[nodes.Count,nodes.Count];
-            foreach (Triad tri in triads)
+            catch (Exception)
             {
-                adjMatrix[tri.a, tri.b] = points[tri.a].distanceTo(points[tri.b]);
-                adjMatrix[tri.b, tri.a] = adjMatrix[tri.a, tri.b];
-                adjMatrix[tri.a, tri.c] = points[tri.a].distanceTo(points[tri.c]);
-                adjMatrix[tri.c, tri.a] = adjMatrix[tri.a, tri.c];
-                adjMatrix[tri.b, tri.c] = points[tri.b].distanceTo(points[tri.c]);
-                adjMatrix[tri.c, tri.b] = adjMatrix[tri.b, tri.c];
+                //Return some basic approximation
+                return CalculateNetLengthLinear(points);
             }
-
-            List<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
-
-            double total = 0.0;
-            foreach (Edge edge in EMST)
-            {
-                total += edge.Length;
-            }
-
-            return total;
         }
 
-        //TODO Optimize.  Currently a hot path.
-        private static List<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
+        private static double CalculateNetLengthLinear(List<Vertex> points)
+        {
+            Vertex min = points[0];
+            Vertex max = points[0];
+            for (int i = 1; i < points.Count; i++)
+            {
+                if (points[i].x < min.x || points[i].y < min.y)
+                    min = points[i];
+                if (points[i].x > max.x || points[i].y > max.y)
+                    max = points[i];
+            }
+
+            return Math.Max(max.x - min.x, max.y - min.y);
+        }
+
+        private static bool Colinear(List<Vertex> points)
+        {
+            float x = points[0].x;
+            float y = points[0].y;
+
+            bool xDiff = false;
+            bool yDiff = false;
+            for (int i = 1; i < points.Count; i++)
+            {
+                if (x != points[i].x)
+                    xDiff = true;
+                if (y != points[i].y)
+                    yDiff = true;
+
+                if (xDiff && yDiff)
+                    return false;
+            }
+            return true;
+        }
+
+        public static List<Edge> FindEMST(int points, SortedSet<int> nodes, double[,] adjMatrix)
         {
             //For debugging crashes
             //SortedSet<int> nodesCopy = new SortedSet<int>(nodes);
@@ -284,7 +333,7 @@ namespace PCBGeneticAlgorithm
             return EMST;
         }
 
-        class Edge : IComparable
+        public class Edge : IComparable
         {
             int mU;
             public int U { get { return mU; } }

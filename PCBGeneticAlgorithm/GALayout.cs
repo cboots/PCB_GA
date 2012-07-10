@@ -112,7 +112,7 @@ namespace PCBGeneticAlgorithm
 
         private static void PlaceModule(GALayout layout, int moduleIndex, int rotation, int rotatedWidth, int rotatedHeight, int x, int y)
         {
-            layout.ModuleLocations[moduleIndex] = new GAModuleLocation(rotation, x, y, rotatedWidth, rotatedHeight);
+            layout.ModuleLocations[moduleIndex] = new GAModuleLocation(moduleIndex, rotation, x, y, rotatedWidth, rotatedHeight);
         }
 
         public static bool CheckIfFits(GALayout layout, GAModuleLocation moduleLocation)

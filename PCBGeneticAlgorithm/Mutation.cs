@@ -61,10 +61,10 @@ namespace PCBGeneticAlgorithm
             layout.ModuleLocations[index2] = new GAModuleLocation();
 
 
-            GAModuleLocation newLoc1 = new GAModuleLocation(loc2.Rotation, loc2.X, loc2.Y, 
+            GAModuleLocation newLoc1 = new GAModuleLocation(index1, loc2.Rotation, loc2.X, loc2.Y, 
                 mod1.getRotatedWidth(loc2.Rotation), mod1.getRotatedHeight(loc2.Rotation));
 
-            GAModuleLocation newLoc2 = new GAModuleLocation(loc1.Rotation, loc1.X, loc1.Y, 
+            GAModuleLocation newLoc2 = new GAModuleLocation(index2, loc1.Rotation, loc1.X, loc1.Y, 
                 mod2.getRotatedWidth(loc1.Rotation), mod2.getRotatedHeight(loc1.Rotation));
 
             TryReplace(ga, layout, index1, newLoc1);
@@ -81,7 +81,7 @@ namespace PCBGeneticAlgorithm
             else
             {
                 //Try rotating
-                newLocation = new GAModuleLocation((newLocation.Rotation + 1) % 4,
+                newLocation = new GAModuleLocation(modIndex, (newLocation.Rotation + 1) % 4,
                     newLocation.X, newLocation.Y, newLocation.Height, newLocation.Width);
                 if (GALayout.CheckIfFits(layout, newLocation))
                 {
@@ -101,7 +101,7 @@ namespace PCBGeneticAlgorithm
             GAModuleLocation loc = layout.ModuleLocations[index]; 
             layout.ModuleLocations[index] = new GAModuleLocation();
 
-            GAModuleLocation loc1 =  new GAModuleLocation((loc.Rotation + 1) % 4, loc.X, loc.Y, loc.Height, loc.Width);
+            GAModuleLocation loc1 =  new GAModuleLocation(index, (loc.Rotation + 1) % 4, loc.X, loc.Y, loc.Height, loc.Width);
             if (GALayout.CheckIfFits(layout, loc))
             {
                 layout.ModuleLocations[index] = loc1;

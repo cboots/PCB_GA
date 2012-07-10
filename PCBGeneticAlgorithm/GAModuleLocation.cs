@@ -8,6 +8,8 @@ namespace PCBGeneticAlgorithm
 {
     public struct GAModuleLocation
     {
+        int mIndex;
+        public int ModIndex { get { return mIndex; } }
         int mRotation;
         public int Rotation { get { return mRotation; } }
         int mX;
@@ -27,8 +29,9 @@ namespace PCBGeneticAlgorithm
         public int Width { get { return mWidth; } }
 
 
-        public GAModuleLocation(int rotation, int x, int y, int rotatedWidth, int rotatedHeight)
+        public GAModuleLocation(int index, int rotation, int x, int y, int rotatedWidth, int rotatedHeight)
         {
+            mIndex = index;
             mRotation = rotation;
             mX = x;
             mY = y;
@@ -56,7 +59,7 @@ namespace PCBGeneticAlgorithm
 
         public override string ToString()
         {
-            return "{x=" + mX + ",y=" + mY + ",rot=" + mRotation + ",w=" + mWidth + ",h=" + mHeight + "}";
+            return "{id="+mIndex+"x=" + mX + ",y=" + mY + ",rot=" + mRotation + ",w=" + mWidth + ",h=" + mHeight + "}";
         }
     }
 }
