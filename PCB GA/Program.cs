@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     static class Program
     {

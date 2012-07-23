@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     class ModuleLibrary
     {

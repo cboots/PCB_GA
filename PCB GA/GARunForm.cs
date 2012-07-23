@@ -10,12 +10,12 @@ using PCBGeneticAlgorithm;
 using System.IO;
 using DelaunayTriangulator;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     public partial class GARunForm : Form
     {
         public GeneticAlgorithm GA {get; set;}
-
+        public string OutputPath { get; set; }
 
         public GARunForm()
         {
@@ -36,51 +36,91 @@ namespace PCB_Layout_GA
         {
             //Setup first generation
             GALayout[] generation = new GALayout[GA.GenerationSize];
-
+            
             logProgress("Creating Initial Population");
             for (int i = 0; i < generation.Length; i++)
             {
                 generation[i] = GALayout.GenerateRandomLayout(GA);
             }
 
-            using (System.IO.StreamWriter fitnessWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\RunFitness.text"))
+            Directory.CreateDirectory(OutputPath);
+
+            using (System.IO.StreamWriter paramWriter = new System.IO.StreamWriter(OutputPath + @"\GAParams.text"))
             {
-                using (System.IO.StreamWriter f1Writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\RunF1.text"))
+                paramWriter.WriteLine(GA.GenerationSize);
+                paramWriter.WriteLine(GA.MaxGeneration);
+                paramWriter.WriteLine(GA.Modules.Length);
+                paramWriter.WriteLine(GA.Nets.Length);
+                paramWriter.WriteLine(GA.WorkspaceWidth);
+                paramWriter.WriteLine(GA.WorkspaceHeight);
+                paramWriter.WriteLine(GA.GridSize);
+                paramWriter.WriteLine(GA.Alpha);
+                paramWriter.WriteLine(GA.Beta);
+                paramWriter.WriteLine(GA.Gamma);
+                paramWriter.WriteLine(GA.XStd);
+                paramWriter.WriteLine(GA.YStd);
+                paramWriter.WriteLine(GA.MutationRateRotation);
+                paramWriter.WriteLine(GA.MutationRateTranspose);
+                paramWriter.WriteLine(GA.MutationRateSwap);
+                paramWriter.WriteLine(GA.CrossoverRate);
+                paramWriter.WriteLine(GA.CrossoverWidth);
+            }
+
+            using (System.IO.StreamWriter fitnessWriter = new System.IO.StreamWriter(OutputPath + @"\RunFitness.text"))
+            {
+                using (System.IO.StreamWriter f1Writer = new System.IO.StreamWriter(OutputPath + @"\RunF1.text"))
                 {
-                    using (System.IO.StreamWriter f2Writer = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\RunF2.text"))
+                    using (System.IO.StreamWriter f2Writer = new System.IO.StreamWriter(OutputPath + @"\RunF2.text"))
                     {
-                        using (System.IO.StreamWriter rawAreaWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\RunRawArea.text"))
+                        using (System.IO.StreamWriter f3Writer = new System.IO.StreamWriter(OutputPath + @"\RunF3.text"))
                         {
-                            using (System.IO.StreamWriter rawNetLengthWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\RunRawNetLength.text"))
-                            {
-                                for (int gen = 1; gen <= GA.MaxGeneration; gen++)
-                                {
-                                    logProgress((100 * gen) / GA.MaxGeneration, "Evaluating Generation: " + gen + "\n");
-                                    FitnessEvaluator.EvaluateGenerationFitness(GA, generation);
+                           using (System.IO.StreamWriter rawConstraintCountWriter = new System.IO.StreamWriter(OutputPath + @"\RunRawConstraintViolations.text"))
+                           {
+                               using (System.IO.StreamWriter rawAreaWriter = new System.IO.StreamWriter(OutputPath + @"\RunRawArea.text"))
+                               {
+                                   using (System.IO.StreamWriter rawNetLengthWriter = new System.IO.StreamWriter(OutputPath + @"\RunRawNetLength.text"))
+                                   {
+                                       using (System.IO.StreamWriter rawCrossoverWriter = new System.IO.StreamWriter(OutputPath + @"\RunRawCrossoverCount.text"))
+                                       {
+                                           for (int gen = 1; gen <= GA.MaxGeneration; gen++)
+                                           {
+                                               logProgress((100 * gen) / GA.MaxGeneration, "Evaluating Generation: " + gen + "\n");
+                                               FitnessEvaluator.EvaluateGenerationFitness(GA, generation);
 
-                                    foreach (GALayout layout in generation)
-                                    {
-                                        fitnessWriter.Write(layout.Fitness);
-                                        fitnessWriter.Write(' ');
-                                        f1Writer.Write(layout.F1);
-                                        f1Writer.Write(' ');
-                                        f2Writer.Write(layout.F2);
-                                        f2Writer.Write(' ');
-                                        rawAreaWriter.Write(layout.RawAreaFitness);
-                                        rawAreaWriter.Write(' ');
-                                        rawNetLengthWriter.Write(layout.RawNetFitness);
-                                        rawNetLengthWriter.Write(' ');
-                                    }
-                                    fitnessWriter.WriteLine();
-                                    f1Writer.WriteLine();
-                                    f2Writer.WriteLine();
-                                    rawAreaWriter.WriteLine();
-                                    rawNetLengthWriter.WriteLine();
+                                               foreach (GALayout layout in generation)
+                                               {
+                                                   fitnessWriter.Write(layout.Fitness);
+                                                   fitnessWriter.Write(' ');
+                                                   f1Writer.Write(layout.F1);
+                                                   f1Writer.Write(' ');
+                                                   f2Writer.Write(layout.F2);
+                                                   f2Writer.Write(' ');
+                                                   f3Writer.Write(layout.F3);
+                                                   f3Writer.Write(' ');
+                                                   rawAreaWriter.Write(layout.RawAreaFitness);
+                                                   rawAreaWriter.Write(' ');
+                                                   rawNetLengthWriter.Write(layout.RawNetFitness);
+                                                   rawNetLengthWriter.Write(' ');
+                                                   rawCrossoverWriter.Write(layout.RawCrossoverCount);
+                                                   rawCrossoverWriter.Write(' ');
+                                                   rawConstraintCountWriter.Write(layout.RawConstraintViolations);
+                                                   rawConstraintCountWriter.Write(' ');
+                                               }
+                                               fitnessWriter.WriteLine();
+                                               f1Writer.WriteLine();
+                                               f2Writer.WriteLine();
+                                               f3Writer.WriteLine();
+                                               rawAreaWriter.WriteLine();
+                                               rawNetLengthWriter.WriteLine();
+                                               rawCrossoverWriter.WriteLine();
+                                               rawConstraintCountWriter.WriteLine();
 
-
-                                    logProgress("Creating next generation\n");
-                                    generation = Selection.GenerateNextGeneration(GA, generation);
-                                }
+                                               logProgress("Creating next generation\n");
+                                               generation = Selection.GenerateNextGeneration(GA, generation);
+                                           }
+                                       }
+                                   }
+                               }
                             }
                         }
                     }
@@ -88,9 +128,9 @@ namespace PCB_Layout_GA
             }
             FitnessEvaluator.EvaluateGenerationFitness(GA, generation);
 
-            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\Solution.text"))
+            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(OutputPath + @"\Solution.text"))
             {
-                using (System.IO.StreamWriter connectionswriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\SolutionNets.text"))
+                using (System.IO.StreamWriter connectionswriter = new System.IO.StreamWriter(OutputPath + @"\SolutionNets.text"))
                 {
                     double minFitness = Double.MaxValue;
                     GALayout best = null;
@@ -188,7 +228,7 @@ namespace PCB_Layout_GA
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -231,18 +271,7 @@ namespace PCB_Layout_GA
             }
         }
 
-        private class Connection
-        {
-            public Vertex P1 {get;set;}
-            public Vertex P2 {get;set;}
 
-            public Connection(Vertex p1, Vertex p2)
-            {
-                P1 = p1;
-                P2 = p2;
-            }
-
-        }
 
 
         public static void print2DArray(ushort[,] array, StreamWriter writer)

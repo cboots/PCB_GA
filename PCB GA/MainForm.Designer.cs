@@ -1,4 +1,4 @@
-﻿namespace PCB_Layout_GA
+﻿namespace PCBGeneticAlgorithm
 {
     partial class MainForm
     {
@@ -76,12 +76,16 @@
             this.label7 = new System.Windows.Forms.Label();
             this.genSizeTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.outputPathTextBox = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -236,7 +240,7 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.genSizeTextBox);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(13, 189);
+            this.groupBox3.Location = new System.Drawing.Point(12, 243);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(463, 231);
             this.groupBox3.TabIndex = 6;
@@ -332,7 +336,7 @@
             this.crossoverWidthTextbox.Name = "crossoverWidthTextbox";
             this.crossoverWidthTextbox.Size = new System.Drawing.Size(46, 20);
             this.crossoverWidthTextbox.TabIndex = 8;
-            this.crossoverWidthTextbox.Text = "0.5";
+            this.crossoverWidthTextbox.Text = "0.75";
             // 
             // label11
             // 
@@ -364,7 +368,7 @@
             this.swapRateTextbox.Name = "swapRateTextbox";
             this.swapRateTextbox.Size = new System.Drawing.Size(46, 20);
             this.swapRateTextbox.TabIndex = 10;
-            this.swapRateTextbox.Text = "0.01";
+            this.swapRateTextbox.Text = "0.02";
             // 
             // label10
             // 
@@ -381,7 +385,7 @@
             this.transposeRateTextbox.Name = "transposeRateTextbox";
             this.transposeRateTextbox.Size = new System.Drawing.Size(46, 20);
             this.transposeRateTextbox.TabIndex = 8;
-            this.transposeRateTextbox.Text = "0.01";
+            this.transposeRateTextbox.Text = "0.02";
             // 
             // label9
             // 
@@ -398,7 +402,7 @@
             this.rotationRateTextbox.Name = "rotationRateTextbox";
             this.rotationRateTextbox.Size = new System.Drawing.Size(46, 20);
             this.rotationRateTextbox.TabIndex = 6;
-            this.rotationRateTextbox.Text = "0.01";
+            this.rotationRateTextbox.Text = "0.02";
             // 
             // label8
             // 
@@ -435,7 +439,7 @@
             this.gammaTextBox.Name = "gammaTextBox";
             this.gammaTextBox.Size = new System.Drawing.Size(46, 20);
             this.gammaTextBox.TabIndex = 13;
-            this.gammaTextBox.Text = "100.0";
+            this.gammaTextBox.Text = "1.0";
             // 
             // label15
             // 
@@ -533,7 +537,7 @@
             this.maxGenTextBox.Name = "maxGenTextBox";
             this.maxGenTextBox.Size = new System.Drawing.Size(46, 20);
             this.maxGenTextBox.TabIndex = 13;
-            this.maxGenTextBox.Text = "500";
+            this.maxGenTextBox.Text = "250";
             // 
             // label7
             // 
@@ -550,7 +554,7 @@
             this.genSizeTextBox.Name = "genSizeTextBox";
             this.genSizeTextBox.Size = new System.Drawing.Size(46, 20);
             this.genSizeTextBox.TabIndex = 10;
-            this.genSizeTextBox.Text = "500";
+            this.genSizeTextBox.Text = "200";
             // 
             // label6
             // 
@@ -561,11 +565,43 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Generation Size: ";
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.outputPathTextBox);
+            this.groupBox7.Controls.Add(this.button2);
+            this.groupBox7.Location = new System.Drawing.Point(13, 188);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(462, 49);
+            this.groupBox7.TabIndex = 7;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Output Path";
+            // 
+            // outputPathTextBox
+            // 
+            this.outputPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputPathTextBox.Location = new System.Drawing.Point(6, 19);
+            this.outputPathTextBox.Name = "outputPathTextBox";
+            this.outputPathTextBox.Size = new System.Drawing.Size(371, 20);
+            this.outputPathTextBox.TabIndex = 3;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(383, 17);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Browse";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 432);
+            this.ClientSize = new System.Drawing.Size(488, 486);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -583,6 +619,8 @@
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -637,6 +675,9 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox crossoverRateTB;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox outputPathTextBox;
+        private System.Windows.Forms.Button button2;
     }
 }
 

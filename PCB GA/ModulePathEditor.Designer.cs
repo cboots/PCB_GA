@@ -1,4 +1,4 @@
-﻿namespace PCB_Layout_GA
+﻿namespace PCBGeneticAlgorithm
 {
     partial class ModulePathEditor
     {

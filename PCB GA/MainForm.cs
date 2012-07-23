@@ -10,7 +10,7 @@ using System.IO;
 using PCBGeneticAlgorithm;
 using System.Diagnostics;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     public partial class MainForm : Form
     {
@@ -32,6 +32,7 @@ namespace PCB_Layout_GA
 
             ImportNetlistForm importForm = new ImportNetlistForm();
             importForm.NetlistPath = netlistTextBox.Text;
+            outputPathTextBox.Text = new FileInfo(netlistTextBox.Text).Directory.FullName + "\\GAOutput";
             DialogResult result = importForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -144,23 +145,7 @@ namespace PCB_Layout_GA
             //Launch ga running dialog
             GARunForm runForm = new GARunForm();
             runForm.GA = ga;
-
-            //For Profiling only
-            //runForm.RunNormalGA();
-            GALayout testLayout = GALayout.GenerateRandomLayout(ga);
-
-            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testLayout1.text"))
-            {
-                print2DArray(testLayout.GenerateArray(), solutionWriter);
-            }
-
-            testLayout.ModuleLocations = Compaction.Compact(testLayout.ModuleLocations);
-
-            using (System.IO.StreamWriter solutionWriter = new System.IO.StreamWriter(@"C:\Users\Collin\Dropbox\Current Classes\Independent Study\testLayout2.text"))
-            {   
-                print2DArray(testLayout.GenerateArray(), solutionWriter);
-            }
-
+            runForm.OutputPath = outputPathTextBox.Text;
             DialogResult result = runForm.ShowDialog();
 
         }
@@ -332,6 +317,17 @@ namespace PCB_Layout_GA
                     writer.Write(array[j, i] + " ");
                 }
                 writer.WriteLine();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = this.netlistOpenFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //Add to list
+                outputPathTextBox.Text = this.netlistOpenFileDialog.FileName;
             }
         }
 

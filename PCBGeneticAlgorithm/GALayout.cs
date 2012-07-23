@@ -27,11 +27,13 @@ namespace PCBGeneticAlgorithm
 
         public double RawNetFitness { get; set; }
         public double RawAreaFitness { get; set; }
+        public int RawCrossoverCount { get; set; }
         public int RawConstraintViolations { get; set; }
 
         public double F1 { get; set; }
         public double F2 { get; set; }
         public double F3 { get; set; }
+        public double F4 { get; set; }
 
         public double Fitness { get; set; }
 
@@ -43,6 +45,11 @@ namespace PCBGeneticAlgorithm
             set { moduleLocations = value; } 
         }
 
+        private List<Connection> connections = null;
+        public List<Connection> Connections {
+            get { return connections; }
+            set { connections = value; }
+        }
 
         public GALayout(GeneticAlgorithm ga)
         {
@@ -50,7 +57,6 @@ namespace PCBGeneticAlgorithm
             mHeight = ga.WorkspaceHeight;
             moduleLocations = new GAModuleLocation[ga.Modules.Length];
         }
-
 
         public static GALayout GenerateRandomLayout(GeneticAlgorithm ga)
         {
@@ -181,6 +187,7 @@ namespace PCBGeneticAlgorithm
             }
             return layout;
         }
+
 
     }
 }

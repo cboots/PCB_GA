@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     public partial class ImportNetlistForm : Form
     {

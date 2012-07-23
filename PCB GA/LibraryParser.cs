@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PCB_Layout_GA
+namespace PCBGeneticAlgorithm
 {
     class LibraryParser
     {

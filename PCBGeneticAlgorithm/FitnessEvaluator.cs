@@ -15,14 +15,40 @@ namespace PCBGeneticAlgorithm
             foreach (GALayout layout in generation)
             {
                 GAModuleLocation[] compacted = Compaction.Compact(layout.ModuleLocations);
-                layout.RawAreaFitness = AssessRawAreaFitness(ga, compacted);
-                layout.RawNetFitness = AssessRawNetFitness(ga, compacted);
+               if (ga.Alpha > 0.0)
+               {
+                   layout.RawAreaFitness = AssessRawAreaFitness(ga, compacted);
+                }
+                else
+                {
+                    layout.RawAreaFitness = 0.0;
+                }
+
+                layout.Connections = new List<Connection>();
+                if (ga.Beta > 0.0 || ga.Gamma > 0.0)
+                {
+                    layout.RawNetFitness = AssessRawNetFitness(ga, compacted, layout.Connections);
+                }
+                else
+                {
+                    layout.RawNetFitness = 0.0;
+                }
+
+                if (ga.Gamma > 0.0)
+                {
+                    layout.RawCrossoverCount = AssessRawCrossoverCount(layout.Connections);
+                }else
+                {
+                    layout.RawCrossoverCount = 0;
+                }
+
                 layout.RawConstraintViolations = AssessRawConstraintViolations(ga, compacted);
             }
 
             CalculateNormalizedF1(generation);
             CalculateNormalizedF2(generation);
-            CalculateF3(generation);
+            CalculateNormalizedF3(generation);
+            CalculateF4(generation);
 
             foreach (GALayout layout in generation)
             {
@@ -36,12 +62,28 @@ namespace PCBGeneticAlgorithm
             return 0;
         }
 
-        private static void CalculateF3(GALayout[] generation)
+        private static void CalculateF4(GALayout[] generation)
         {
             foreach (GALayout layout in generation)
             {
-                layout.F3 = layout.RawConstraintViolations;
+                layout.F4 = layout.RawConstraintViolations;
             }
+        }
+
+        private static int AssessRawCrossoverCount(List<Connection> list)
+        {
+            int count = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = i; j < list.Count; j++)
+                {
+                    if (list[i].Intersects(list[j]))
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
         }
 
         public static double AssessRawAreaFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
@@ -71,7 +113,7 @@ namespace PCBGeneticAlgorithm
             return (maxX - minX) * (maxY - minY);
         }
 
-        public static double AssessRawNetFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations)
+        public static double AssessRawNetFitness(GeneticAlgorithm ga, GAModuleLocation[] moduleLocations, List<Connection> connections)
         {
             double total = 0.0;
             for (int i = 0; i < ga.Nets.Length; i++)
@@ -84,15 +126,15 @@ namespace PCBGeneticAlgorithm
                         break;
                     case 2:
                         //Special case, only one edge to assess
-                        netLength = CalculateNetLength2(ga, net, moduleLocations);
+                        netLength = CalculateNetLength2(ga, net, moduleLocations, connections);
                         break;
                     case 3:
                         //Special case, find shortest two nets
-                        netLength = CalculateNetLength3(ga, net, moduleLocations);
+                        netLength = CalculateNetLength3(ga, net, moduleLocations, connections);
                         break;
                     default:
                         //use euclidian min-spanning tree approach
-                        netLength = CalculateNetLengthEuclidean(ga, net, moduleLocations);
+                        netLength = CalculateNetLengthEuclidean(ga, net, moduleLocations, connections);
                         break;
 
                 }
@@ -128,9 +170,18 @@ namespace PCBGeneticAlgorithm
                 sum += layout.RawAreaFitness;
             }
 
+            
+
             foreach (GALayout layout in layouts)
             {
-                layout.F1 = (layout.RawAreaFitness / sum);
+                if (sum == 0)
+                {
+                    layout.F1 = 1;
+                }
+                else
+                {
+                    layout.F1 = (layout.RawAreaFitness / sum);
+                }
             }
         }
 
@@ -145,13 +196,42 @@ namespace PCBGeneticAlgorithm
 
             foreach (GALayout layout in layouts)
             {
-                layout.F2 = (layout.RawNetFitness / sum);
+                if (sum == 0)
+                {
+                    layout.F1 = 1;
+                }
+                else
+                {
+                    layout.F2 = (layout.RawNetFitness / sum);
+                }
+            }
+        }
+
+        private static void CalculateNormalizedF3(GALayout[] layouts)
+        {
+            double sum = 0;
+
+            foreach (GALayout layout in layouts)
+            {
+                sum += layout.RawCrossoverCount;
+            }
+
+            foreach (GALayout layout in layouts)
+            {
+                if (sum == 0)
+                {
+                    layout.F1 = 1;
+                }
+                else
+                {
+                    layout.F2 = (layout.RawCrossoverCount / sum);
+                }
             }
         }
 
         private static void CalculateFitness(GeneticAlgorithm ga, GALayout layout)
         {
-            layout.Fitness = ga.Alpha * layout.F1 + ga.Beta * layout.F2 + ga.Gamma * layout.F3;
+            layout.Fitness = ga.Alpha * layout.F1 + ga.Beta * layout.F2 + ga.Gamma * layout.F3 + 100 * layout.F4;
             if(ga.XStd > 0 || ga.YStd > 0)
             {
                 if(sRandomNorm == null)
@@ -162,22 +242,22 @@ namespace PCBGeneticAlgorithm
                 double X;
                 double Y; 
                 sRandomNorm.GetNextTwo(out X, out Y, 1.0, 1.0, ga.XStd, ga.YStd);
-                layout.VariedFitness = ga.Alpha * X * layout.F1 + ga.Beta * Y * layout.F2 + ga.Gamma * layout.F3;
+                layout.VariedFitness = ga.Alpha * X * layout.F1 + ga.Beta * Y * layout.F2 + ga.Gamma * layout.F3 + 100 * layout.F4;
 
             }else{
                 layout.VariedFitness = layout.Fitness;
             }
         }
 
-        private static double CalculateNetLength2(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        private static double CalculateNetLength2(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations, List<Connection> connections)
         {
 
             List<Vertex> points = GetPinLocations(ga, net, locations);
-
+            connections.Add(new Connection(points[0], points[1]));
             return points[0].distanceTo(points[1]);
         }
 
-        private static double CalculateNetLength3(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        private static double CalculateNetLength3(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations, List<Connection> connections)
         {
             List<Vertex> points = GetPinLocations(ga, net, locations);
 
@@ -185,11 +265,26 @@ namespace PCBGeneticAlgorithm
             double len1 = points[1].distanceTo(points[2]);
             double len2 = points[2].distanceTo(points[0]);
 
-            //Return sum of lengths minus longest connection
-            return len0 + len1 + len2 - Math.Max(Math.Max(len0, len1), len2);
+            double max = Math.Max(Math.Max(len0, len1), len2);
+            if (max == len0)
+            {
+                connections.Add(new Connection(points[1], points[2]));
+                return len1 + len2;
+            }
+            else if (max == len1)
+            {
+                connections.Add(new Connection(points[0], points[2]));
+                return len0 + len2;
+            }
+            else //max == len2
+            {
+                connections.Add(new Connection(points[0], points[1]));
+                return len0 + len1;
+            }
+
         }
 
-        private static double CalculateNetLengthEuclidean(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations)
+        private static double CalculateNetLengthEuclidean(GeneticAlgorithm ga, GANet net, GAModuleLocation[] locations, List<Connection> connections)
         {
             List<Vertex> points = GetPinLocations(ga, net, locations);
 
@@ -225,10 +320,10 @@ namespace PCBGeneticAlgorithm
                 }
 
                 List<Edge> EMST = FindEMST(points.Count, nodes, adjMatrix);
-
                 double total = 0.0;
                 foreach (Edge edge in EMST)
                 {
+                    connections.Add(new Connection(points[edge.U], points[edge.V]));
                     total += edge.Length;
                 }
 
