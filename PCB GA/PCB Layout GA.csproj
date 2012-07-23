@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConstraintsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConstraintsEditor.Designer.cs">
+      <DependentUpon>ConstraintsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Drawing.cs" />
     <Compile Include="GARunForm.cs">
       <SubType>Form</SubType>
@@ -75,8 +81,17 @@
       <DependentUpon>ModulePathEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="NetList.cs" />
+    <Compile Include="NetWeightEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetWeightEditor.Designer.cs">
+      <DependentUpon>NetWeightEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConstraintsEditor.resx">
+      <DependentUpon>ConstraintsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GARunForm.resx">
       <DependentUpon>GARunForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ModulePathEditor.resx">
       <DependentUpon>ModulePathEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetWeightEditor.resx">
+      <DependentUpon>NetWeightEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -165,6 +165,8 @@ namespace PCBGeneticAlgorithm
 
             public List<Pin> Pins = new List<Pin>();
 
+            public float Weight { get; set; }
+
             public static Net parse(string[] lines, ref int currentLine)
             {
 
@@ -175,6 +177,7 @@ namespace PCBGeneticAlgorithm
                     net.ID = Int32.Parse(strings[1]);
                     net.FullName = strings[2];
                     net.ShortName = strings[3];
+                    net.Weight = 1.0f;
 
                     currentLine++;
                     while (lines[currentLine].StartsWith(" "))

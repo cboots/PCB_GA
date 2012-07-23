@@ -92,7 +92,10 @@ namespace PCBGeneticAlgorithm
 
         private void adjustConstraintsButton_Click(object sender, EventArgs e)
         {
-
+            ConstraintsEditor editor = new ConstraintsEditor();
+            editor.ImportedNetList = ImportedNetList;
+            editor.FilePath = netlistTextBox.Text; 
+            editor.ShowDialog();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -190,7 +193,7 @@ namespace PCBGeneticAlgorithm
                 }
                 connections[p, 1] = pinIdx;
             }
-            GANet gaNet = new GANet(net.FullName, connections);
+            GANet gaNet = new GANet(net.FullName, connections, net.Weight);
             return gaNet;
         }
 

@@ -120,6 +120,10 @@ namespace PCBGeneticAlgorithm
             {
                 double netLength = 0.0;
                 GANet net = ga.Nets[i];
+                if (net.Weight <= 0.0)
+                {
+                    continue;
+                }
                 switch (net.Connections.Length/2)
                 {
                     case 1://Error
@@ -138,7 +142,7 @@ namespace PCBGeneticAlgorithm
                         break;
 
                 }
-                total += netLength;
+                total += netLength*net.Weight;
             }
 
             return total;

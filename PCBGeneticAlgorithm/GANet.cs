@@ -17,10 +17,14 @@ namespace PCBGeneticAlgorithm
         /// </summary>
         public int[,] Connections { get { return mConnections; } }
 
-        public GANet(string netName, int[,] connections)
+        private float mWeight;
+        public float Weight { get { return mWeight; } }
+
+        public GANet(string netName, int[,] connections, float weight)
         {
             mConnections = connections;
             mNetName = netName;
+            mWeight = weight;
         }
 
     }
