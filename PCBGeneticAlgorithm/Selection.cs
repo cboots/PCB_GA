@@ -44,12 +44,26 @@ namespace PCBGeneticAlgorithm
         private static GALayout[] ElitistSelection(GALayout[] currentGeneration)
         {
             //Simple elitism for now.  Look into Pareto Optimal Elitism
-            GALayout[] elites = new GALayout[1];
-            elites[0] = currentGeneration[0];
+            GALayout[] elites = new GALayout[4];
+            elites[0] = currentGeneration[0];//minimum f
+            elites[1] = currentGeneration[0];//minimum f1
+            elites[2] = currentGeneration[0];//minimum f2
+            elites[3] = currentGeneration[0];//minimum f3
+
+
             for (int i = 1; i < currentGeneration.Length; i++)
             {
                 if (currentGeneration[i].Fitness < elites[0].Fitness)
                     elites[0] = currentGeneration[i];
+
+                if (currentGeneration[i].RawAreaFitness < elites[1].RawAreaFitness)
+                    elites[1] = currentGeneration[i];
+
+                if (currentGeneration[i].RawNetFitness < elites[2].RawNetFitness)
+                    elites[2] = currentGeneration[i];
+
+                if (currentGeneration[i].RawCrossoverCount < elites[3].RawCrossoverCount)
+                    elites[3] = currentGeneration[i];
             }
             return elites;
         }

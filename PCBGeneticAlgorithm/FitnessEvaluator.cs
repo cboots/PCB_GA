@@ -202,7 +202,7 @@ namespace PCBGeneticAlgorithm
             {
                 if (sum == 0)
                 {
-                    layout.F1 = 1;
+                    layout.F2 = 1;
                 }
                 else
                 {
@@ -224,11 +224,11 @@ namespace PCBGeneticAlgorithm
             {
                 if (sum == 0)
                 {
-                    layout.F1 = 1;
+                    layout.F3 = 1;
                 }
                 else
                 {
-                    layout.F2 = (layout.RawCrossoverCount / sum);
+                    layout.F3 = (layout.RawCrossoverCount / sum);
                 }
             }
         }
